@@ -1,0 +1,6 @@
+python-dotenv
+openai
+chromadb
+sentence-transformers
+xmltodict
+lxml
