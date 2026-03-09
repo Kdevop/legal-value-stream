@@ -1,6 +1,5 @@
-python-dotenv
+pdfplumber
+python-docx
 openai
-chromadb
-sentence-transformers
-xmltodict
-lxml
+pydantic
+python-dotenv
