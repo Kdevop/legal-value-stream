@@ -25,5 +25,3 @@ gunicorn
 
 # Optional: Local Demo UI
 streamlit
-
-flask
