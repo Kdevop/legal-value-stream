@@ -3,3 +3,5 @@ python-docx
 openai
 pydantic
 python-dotenv
+streamlit
+PyMuPDF
