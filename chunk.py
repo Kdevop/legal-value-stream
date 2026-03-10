@@ -125,23 +125,23 @@ def assess_risk(new_case_description):
     # 3. Build prompt
     prompt = f"""You are an employment law risk assessor.
 
-Using these relevant precedent cases as context:
+    Using these relevant precedent cases as context:
 
-{context}
+    {context}
 
-Assess the following case and return ONLY a JSON object:
+    Assess the following case and return ONLY a JSON object:
 
-Case to assess:
-{new_case_description}
+    Case to assess:
+    {new_case_description}
 
-Return this exact JSON structure:
-{{
-  "is_high_risk": true or false,
-  "risk_level": "low" or "medium" or "high",
-  "risk_reasons": ["reason 1", "reason 2"],
-  "similar_precedents": ["case title 1", "case title 2"],
-  "recommended_action": "what to do next"
-}}"""
+    Return this exact JSON structure:
+    {{
+    "is_high_risk": true or false,
+    "risk_level": "low" or "medium" or "high",
+    "risk_reasons": ["reason 1", "reason 2"],
+    "similar_precedents": ["case title 1", "case title 2"],
+    "recommended_action": "what to do next"
+    }}"""
 
     # 4. Call the LLM
     model_resp = llm.chat.completions.create(
@@ -156,10 +156,17 @@ Return this exact JSON structure:
     raw = model_resp.choices[0].message.content
 
     # fix: strip markdown code fences if model wraps response in ```json ... ```
+    
     raw = raw.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
 
-    return json.loads(raw)
+    # Remove invalid control characters
+    import re
+    raw = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]', '', raw)
 
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        return json.loads(raw, strict=False)
 
 # Test it
 #result = assess_risk("""

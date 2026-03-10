@@ -1,76 +1,233 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Case Risk Assessor</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>SentinalLaw - Employment Risk Assessment</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #0e1e2e; --navy2: #162436; --gold: #b8975a; --gold2: #d4b07a;
+  --cream: #f7f4ef; --paper: #f0ebe2; --rule: #d6cfc3;
+  --text: #1a1a1a; --muted: #6b6560; --red: #8b2020;
+}
+body { background: var(--cream); color: var(--text); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
+
+header { background: var(--navy); padding: 0 4rem; display: flex; align-items: stretch; justify-content: space-between; border-bottom: 1px solid rgba(184,151,90,0.3); }
+.header-brand { display: flex; align-items: center; gap: 1.4rem; padding: 1.6rem 0; }
+.header-crest { width: 42px; height: 42px; border: 1.5px solid var(--gold); display: flex; align-items: center; justify-content: center; color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-style: italic; flex-shrink: 0; }
+.header-text h1 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.25rem; color: #fff; letter-spacing: 0.04em; line-height: 1.1; }
+.header-text p { font-size: 0.65rem; color: var(--gold); letter-spacing: 0.2em; text-transform: uppercase; margin-top: 0.2rem; }
+.gold-rule { height: 3px; background: linear-gradient(90deg, var(--gold) 0%, var(--gold2) 50%, transparent 100%); }
+
+.hero { background: var(--navy2); padding: 3.5rem 4rem; display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; border-bottom: 1px solid rgba(184,151,90,0.2); }
+.hero-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3rem); color: #fff; line-height: 1.15; max-width: 600px; }
+.hero-title em { font-style: italic; color: var(--gold2); }
+.hero-meta { text-align: right; flex-shrink: 0; }
+.hero-meta p { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 0.3rem; }
+.badge-eat { display: inline-block; border: 1px solid rgba(184,151,90,0.4); color: var(--gold); padding: 0.35rem 0.9rem; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; }
+
+main { flex: 1; display: grid; grid-template-columns: 1fr 380px; gap: 3rem; max-width: 1280px; width: 100%; margin: 0 auto; padding: 3rem 4rem; }
+
+.section-label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.8rem; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+.input-panel h2 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.6rem; color: var(--navy); margin-bottom: 0.5rem; line-height: 1.2; }
+.input-panel > p { font-size: 0.85rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.6; max-width: 480px; }
+
+.input-tabs { display: flex; gap: 0; margin-bottom: 0; }
+.tab-btn { padding: 0.6rem 1.4rem; font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; background: var(--paper); border: 1px solid var(--rule); border-bottom: none; cursor: pointer; color: var(--muted); transition: all 0.15s; }
+.tab-btn.active { background: #fff; color: var(--navy); border-top: 2px solid var(--gold); }
+.tab-btn:not(.active):hover { color: var(--navy); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+textarea { width: 100%; min-height: 200px; padding: 1.2rem 1.4rem; font-family: 'Jost', sans-serif; font-size: 0.88rem; font-weight: 300; line-height: 1.7; color: var(--text); background: #fff; border: 1px solid var(--rule); border-top: none; resize: vertical; outline: none; transition: border-color 0.2s; }
+textarea:focus { border-color: var(--gold); }
+textarea::placeholder { color: #bbb; }
+.char-count { text-align: right; font-size: 0.68rem; color: var(--muted); margin-top: 0.4rem; }
+
+.upload-area { background: #fff; border: 1px solid var(--rule); border-top: none; padding: 3rem 2rem; text-align: center; cursor: pointer; transition: background 0.2s; position: relative; }
+.upload-area:hover, .upload-area.over { background: #fffdf7; border-color: var(--gold); }
+.upload-area input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.upload-icon { font-size: 2rem; color: var(--gold); margin-bottom: 0.6rem; }
+.upload-area p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+.upload-area .fname { color: var(--navy); font-weight: 500; margin-top: 0.5rem; font-size: 0.85rem; }
+
+.btn-row { margin-top: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+button { background: var(--navy); color: #fff; border: none; padding: 0.85rem 2.5rem; font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; position: relative; overflow: hidden; }
+button::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--gold); transform: scaleX(0); transition: transform 0.2s; }
+button:hover { background: #1a3250; }
+button:hover::after { transform: scaleX(1); }
+button:disabled { background: #aaa; cursor: not-allowed; }
+.btn-note { font-size: 0.7rem; color: var(--muted); font-style: italic; }
+.err { margin-top: 1rem; padding: 0.7rem 1rem; border-left: 3px solid var(--red); background: #fdf5f5; color: var(--red); font-size: 0.78rem; display: none; }
+
+.sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+.info-card { background: #fff; border: 1px solid var(--rule); padding: 1.5rem; }
+.info-card h3 { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 1rem; color: var(--navy); margin-bottom: 0.8rem; }
+.info-card p, .info-card li { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
+.info-card ul { padding-left: 1rem; margin-top: 0.5rem; }
+.info-card li { margin-bottom: 0.3rem; }
+.disclaimer { background: var(--navy); padding: 1.2rem 1.5rem; border-left: 3px solid var(--gold); }
+.disclaimer strong { color: var(--gold); display: block; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.4rem; }
+.disclaimer p { font-size: 0.72rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+footer { background: var(--navy); border-top: 1px solid rgba(184,151,90,0.2); padding: 1.5rem 4rem; }
+footer p { font-size: 0.68rem; color: rgba(255,255,255,0.3); letter-spacing: 0.06em; }
+
+.spinner { width: 12px; height: 12px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; margin-right: 0.5rem; vertical-align: middle; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 900px) {
+  main { grid-template-columns: 1fr; padding: 2rem; }
+  header, footer { padding: 0 2rem; }
+  footer { padding: 1.5rem 2rem; }
+  .hero { padding: 2.5rem 2rem; flex-direction: column; align-items: flex-start; }
+  .hero-meta { text-align: left; }
+}
+</style>
 </head>
 <body>
 
-<h1>Case Risk Assessor</h1>
+<header>
+  <div class="header-brand">
+    <div class="header-crest">S</div>
+    <div class="header-text">
+      <h1>SentinalLaw</h1>
+      <p>Risk Intelligence Platform</p>
+    </div>
+  </div>
+</header>
+<div class="gold-rule"></div>
 
-<hr>
-
-<h2>Upload a case file</h2>
-<input type="file" id="file-input" accept=".txt,.pdf,.docx"/>
-
-<p>or paste case text below:</p>
-<textarea id="case-text" rows="6" cols="60" placeholder="e.g. Employee dismissed after 4 years, no formal warnings issued..."></textarea>
-
-<br><br>
-<button onclick="assess()">Assess Risk</button>
-<p id="err" style="color:red"></p>
-
-<hr>
-
-<div id="result" style="display:none">
-  <h2>Assessment Result</h2>
-  <p><strong>Risk Level:</strong> <span id="risk-level"></span></p>
-  <p><strong>High Risk:</strong> <span id="high-risk"></span></p>
-
-  <h3>Risk Reasons</h3>
-  <ul id="reasons"></ul>
-
-  <h3>Similar Precedents</h3>
-  <ul id="precedents"></ul>
-
-  <h3>Recommended Action</h3>
-  <p id="action"></p>
+<div class="hero">
+  <h2 class="hero-title">Employment Law<br><em>Risk Assessment</em></h2>
+  <div class="hero-meta">
+    <p>Powered by</p>
+    <div class="badge-eat">Employment Appeal Tribunal - RAG</div>
+  </div>
 </div>
 
-<script>
-  async function assess() {
-    const btn  = document.querySelector("button");
-    const err  = document.getElementById("err");
-    const file = document.getElementById("file-input").files[0];
-    const text = document.getElementById("case-text").value.trim();
+<main>
+  <div class="input-panel">
+    <div class="section-label">Case Submission</div>
+    <h2>Submit a case for risk evaluation</h2>
+    <p>Describe the facts of the employment matter, or upload a document. The system will retrieve relevant EAT precedents and return a structured risk assessment.</p>
 
-    if (!file && !text) { err.textContent = "Upload a file or paste case text."; return; }
+    <div class="input-tabs">
+      <button class="tab-btn active" onclick="switchTab('text', this)">Paste Text</button>
+      <button class="tab-btn" onclick="switchTab('file', this)">Upload Document</button>
+    </div>
+
+    <div id="tab-text" class="tab-panel active">
+      <textarea id="case-text" placeholder="e.g. The claimant was employed as a senior account manager for 6 years. Following a restructure, the respondent dismissed the claimant on grounds of redundancy. No formal selection criteria were disclosed. The claimant is currently on maternity leave." oninput="updateCount()"></textarea>
+      <div class="char-count"><span id="char-count">0</span> characters</div>
+    </div>
+
+    <div id="tab-file" class="tab-panel">
+      <div class="upload-area" id="drop-zone">
+        <input type="file" id="file-input" accept=".txt,.pdf,.doc,.docx"/>
+        <div class="upload-icon">&#8679;</div>
+        <p>Drop a file here or click to browse</p>
+        <p style="font-size:0.72rem;margin-top:0.3rem">Accepts .txt, .pdf, .doc, .docx</p>
+        <div class="fname" id="fname"></div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button id="btn" onclick="assess()">Assess Risk</button>
+      <span class="btn-note">Assessed against EAT case law database</span>
+    </div>
+    <div class="err" id="err"></div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="info-card">
+      <h3>About this tool</h3>
+      <p>This platform uses retrieval-augmented generation grounded on Employment Appeal Tribunal decisions to evaluate litigation risk in employment matters.</p>
+      <ul>
+        <li>Unfair dismissal claims</li>
+        <li>Discrimination proceedings</li>
+        <li>Whistleblowing disputes</li>
+        <li>Redundancy and TUPE matters</li>
+        <li>Constructive dismissal</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h3>Risk Classifications</h3>
+      <p><strong style="color:#8b2020">High:</strong> Significant litigation exposure. Immediate legal review recommended.</p>
+      <p style="margin-top:0.6rem"><strong style="color:#8b6020">Medium:</strong> Moderate exposure. Further investigation advised.</p>
+      <p style="margin-top:0.6rem"><strong style="color:#1a5c3a">Low:</strong> Limited litigation risk based on available precedents.</p>
+    </div>
+    <div class="disclaimer">
+      <strong>Legal Notice</strong>
+      <p>This tool provides indicative risk assessment only and does not constitute legal advice. All assessments should be reviewed by a qualified solicitor before action is taken.</p>
+    </div>
+  </aside>
+</main>
+
+<footer>
+  <p>2025 SentinalLaw - Employment Law Division - All rights reserved</p>
+</footer>
+
+<script>
+  function switchTab(name, el) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('tab-' + name).classList.add('active');
+  }
+
+  function updateCount() {
+    document.getElementById("char-count").textContent = document.getElementById("case-text").value.length;
+  }
+
+  const dz = document.getElementById("drop-zone");
+  const fi = document.getElementById("file-input");
+  fi.onchange = () => { document.getElementById("fname").textContent = fi.files[0] ? fi.files[0].name : ""; };
+  dz.ondragover = e => { e.preventDefault(); dz.classList.add("over"); };
+  dz.ondragleave = () => dz.classList.remove("over");
+  dz.ondrop = e => {
+    e.preventDefault(); dz.classList.remove("over");
+    fi.files = e.dataTransfer.files;
+    document.getElementById("fname").textContent = fi.files[0] ? fi.files[0].name : "";
+  };
+
+  async function assess() {
+    const btn  = document.getElementById("btn");
+    const err  = document.getElementById("err");
+    const file = fi.files[0];
+    const text = document.getElementById("case-text").value.trim();
+    const activeTab = document.querySelector('.tab-panel.active').id;
+
+    if (activeTab === 'tab-text' && !text) { err.style.display = "block"; err.textContent = "Please provide case details before submitting."; return; }
+    if (activeTab === 'tab-file' && !file) { err.style.display = "block"; err.textContent = "Please select a file to upload."; return; }
 
     btn.disabled = true;
-    btn.textContent = "Assessing...";
-    err.textContent = "";
+    btn.innerHTML = '<span class="spinner"></span>Analysing...';
+    err.style.display = "none";
 
     try {
       let resp;
-      if (file) {
-        const fd = new FormData(); fd.append("file", file);
+      if (activeTab === 'tab-file' && file) {
+        const fd = new FormData();
+        fd.append("file", file);
         resp = await fetch("/assess", { method: "POST", body: fd });
       } else {
-        resp = await fetch("/assess", { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify({text}) });
+        resp = await fetch("/assess", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
       }
 
       if (!resp.ok) throw new Error(await resp.text());
       const d = await resp.json();
 
-      document.getElementById("risk-level").textContent  = d.risk_level;
-      document.getElementById("high-risk").textContent   = d.is_high_risk ? "Yes" : "No";
-      document.getElementById("reasons").innerHTML       = (d.risk_reasons||[]).map(r=>`<li>${r}</li>`).join("");
-      document.getElementById("precedents").innerHTML    = (d.similar_precedents||[]).map(p=>`<li>${p}</li>`).join("");
-      document.getElementById("action").textContent      = d.recommended_action || "—";
-      document.getElementById("result").style.display   = "block";
+      sessionStorage.setItem("sentinal_result", JSON.stringify(d));
+      window.location.href = "/result";
 
     } catch(e) {
-      err.textContent = e.message;
-    } finally {
+      err.style.display = "block";
+      err.textContent = "Assessment failed: " + e.message;
       btn.disabled = false;
       btn.textContent = "Assess Risk";
     }

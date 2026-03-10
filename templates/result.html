@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>SentinalLaw - Assessment Result</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #0e1e2e; --navy2: #162436; --gold: #b8975a; --gold2: #d4b07a;
+  --cream: #f7f4ef; --paper: #f0ebe2; --rule: #d6cfc3;
+  --text: #1a1a1a; --muted: #6b6560;
+  --red: #8b2020; --amber: #8b6020; --green: #1a5c3a;
+}
+body { background: var(--cream); color: var(--text); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
+
+header { background: var(--navy); padding: 0 4rem; display: flex; align-items: stretch; justify-content: space-between; border-bottom: 1px solid rgba(184,151,90,0.3); }
+.header-brand { display: flex; align-items: center; gap: 1.4rem; padding: 1.6rem 0; }
+.header-crest { width: 42px; height: 42px; border: 1.5px solid var(--gold); display: flex; align-items: center; justify-content: center; color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-style: italic; flex-shrink: 0; }
+.header-text h1 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.25rem; color: #fff; letter-spacing: 0.04em; line-height: 1.1; }
+.header-text p { font-size: 0.65rem; color: var(--gold); letter-spacing: 0.2em; text-transform: uppercase; margin-top: 0.2rem; }
+.gold-rule { height: 3px; background: linear-gradient(90deg, var(--gold) 0%, var(--gold2) 50%, transparent 100%); }
+
+.result-hero { background: var(--navy2); padding: 3rem 4rem; border-bottom: 1px solid rgba(184,151,90,0.2); display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+.result-hero h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.6rem,3vw,2.4rem); color: #fff; line-height: 1.2; }
+.result-hero h2 em { font-style: italic; color: var(--gold2); }
+.back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--gold); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border: 1px solid rgba(184,151,90,0.4); padding: 0.5rem 1.1rem; transition: background 0.2s; white-space: nowrap; flex-shrink: 0; }
+.back-link:hover { background: rgba(184,151,90,0.1); }
+
+main { flex: 1; max-width: 1000px; width: 100%; margin: 0 auto; padding: 3rem 4rem; }
+
+.section-label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.8rem; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+/* Verdict bar */
+.verdict-bar { display: flex; align-items: center; gap: 2rem; padding: 2rem 2.5rem; background: #fff; border: 1px solid var(--rule); border-left: 6px solid var(--rule); margin-bottom: 2.5rem; animation: fadein 0.4s ease; }
+.verdict-bar.high   { border-left-color: var(--red);   background: #fdf8f8; }
+.verdict-bar.medium { border-left-color: var(--amber); background: #fdf9f3; }
+.verdict-bar.low    { border-left-color: var(--green); background: #f5faf7; }
+
+.verdict-level { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 300; line-height: 1; min-width: 100px; }
+.verdict-bar.high   .verdict-level { color: var(--red);   }
+.verdict-bar.medium .verdict-level { color: var(--amber); }
+.verdict-bar.low    .verdict-level { color: var(--green); }
+.verdict-sub { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-top: 0.3rem; }
+
+.verdict-flag { margin-left: auto; padding: 0.45rem 1.2rem; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; border: 1px solid; flex-shrink: 0; }
+.verdict-bar.high   .verdict-flag { border-color: var(--red);   color: var(--red);   }
+.verdict-bar.medium .verdict-flag { border-color: var(--amber); color: var(--amber); }
+.verdict-bar.low    .verdict-flag { border-color: var(--green); color: var(--green); }
+
+/* Result blocks */
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; animation: fadein 0.5s ease 0.1s both; }
+
+.result-block { background: #fff; border: 1px solid var(--rule); padding: 1.6rem; }
+.result-block h4 { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--rule); }
+.result-block ul { list-style: none; padding: 0; }
+.result-block li { font-size: 0.84rem; color: var(--text); line-height: 1.65; padding: 0.45rem 0; border-bottom: 1px solid var(--paper); display: flex; gap: 0.7rem; }
+.result-block li::before { content: '-'; color: var(--gold); flex-shrink: 0; font-weight: 400; }
+.result-block li:last-child { border-bottom: none; }
+
+/* Action block */
+.action-block { background: var(--navy); padding: 1.8rem 2rem; display: flex; gap: 1.5rem; align-items: flex-start; animation: fadein 0.5s ease 0.2s both; margin-bottom: 2rem; }
+.action-icon { color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 2rem; line-height: 1; flex-shrink: 0; margin-top: 0.1rem; }
+.action-block h4 { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+.action-block p { font-size: 0.84rem; color: rgba(255,255,255,0.8); line-height: 1.7; }
+
+/* Disclaimer */
+.result-disclaimer { border: 1px solid var(--rule); padding: 1rem 1.4rem; display: flex; gap: 1rem; align-items: flex-start; animation: fadein 0.5s ease 0.3s both; }
+.result-disclaimer p { font-size: 0.74rem; color: var(--muted); line-height: 1.6; }
+.result-disclaimer strong { color: var(--navy); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 0.2rem; }
+
+/* No result state */
+.no-result { text-align: center; padding: 5rem 2rem; }
+.no-result h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--navy); margin-bottom: 0.8rem; }
+.no-result p { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; }
+.no-result a { display: inline-block; background: var(--navy); color: #fff; padding: 0.8rem 2rem; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; transition: background 0.2s; }
+.no-result a:hover { background: #1a3250; }
+
+footer { background: var(--navy); border-top: 1px solid rgba(184,151,90,0.2); padding: 1.5rem 4rem; }
+footer p { font-size: 0.68rem; color: rgba(255,255,255,0.3); letter-spacing: 0.06em; }
+
+@keyframes fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 900px) {
+  main { padding: 2rem; }
+  header, footer { padding: 0 2rem; }
+  footer { padding: 1.5rem 2rem; }
+  .result-hero { padding: 2rem; flex-direction: column; align-items: flex-start; }
+  .result-grid { grid-template-columns: 1fr; }
+  .verdict-bar { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-brand">
+    <div class="header-crest">S</div>
+    <div class="header-text">
+      <h1>SentinalLaw</h1>
+      <p>Risk Intelligence Platform</p>
+    </div>
+  </div>
+</header>
+<div class="gold-rule"></div>
+
+<div class="result-hero">
+  <h2>Assessment <em>Result</em></h2>
+  <a class="back-link" href="/">&#8592; New Assessment</a>
+</div>
+
+<main id="main-content">
+  <!-- Populated by JS -->
+</main>
+
+<footer>
+  <p>2025 SentinalLaw - Employment Law Division - All rights reserved</p>
+</footer>
+
+<script>
+  const raw = sessionStorage.getItem("sentinal_result");
+
+  if (!raw) {
+    document.getElementById("main-content").innerHTML = `
+      <div class="no-result">
+        <h2>No assessment found</h2>
+        <p>Please submit a case from the main page to see results here.</p>
+        <a href="/">Go to Assessment</a>
+      </div>`;
+  } else {
+    const d     = JSON.parse(raw);
+    const level = (d.risk_level || "low").toLowerCase();
+    const labels = { high: "High Risk", medium: "Medium Risk", low: "Low Risk" };
+    const flagText = d.is_high_risk ? "Flagged for Review" : "No Immediate Flag";
+
+    const reasonsHtml    = (d.risk_reasons || []).map(r => `<li>${r}</li>`).join("") || "<li>None identified</li>";
+    const precedentsHtml = (d.similar_precedents || []).map(p => `<li>${p}</li>`).join("") || "<li>None retrieved</li>";
+
+    document.getElementById("main-content").innerHTML = `
+      <div class="section-label">Risk Assessment Report</div>
+
+      <div class="verdict-bar ${level}">
+        <div>
+          <div class="verdict-level">${labels[level] || level}</div>
+          <div class="verdict-sub">Overall Risk Classification</div>
+        </div>
+        <div class="verdict-flag">${flagText}</div>
+      </div>
+
+      <div class="result-grid">
+        <div class="result-block">
+          <h4>Risk Factors Identified</h4>
+          <ul>${reasonsHtml}</ul>
+        </div>
+        <div class="result-block">
+          <h4>Similar Precedent Cases</h4>
+          <ul>${precedentsHtml}</ul>
+        </div>
+      </div>
+
+      <div class="action-block">
+        <div class="action-icon">S</div>
+        <div>
+          <h4>Recommended Action</h4>
+          <p>${d.recommended_action || "No recommendation provided."}</p>
+        </div>
+      </div>
+
+      <div class="result-disclaimer">
+        <div>
+          <p><strong>Legal Notice</strong>This assessment is indicative only and does not constitute legal advice. The risk classification is based on retrieval-augmented analysis of Employment Appeal Tribunal decisions and should be reviewed by a qualified solicitor before any action is taken.</p>
+        </div>
+      </div>`;
+  }
+</script>
+</body>
+</html>
