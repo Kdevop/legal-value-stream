@@ -5,7 +5,7 @@ PyMuPDF
 
 # AI/ML
 openai
-sentence-transformers
+sentence_transformers
 chromadb
 
 # Data Validation
@@ -25,5 +25,3 @@ gunicorn
 
 # Optional: Local Demo UI
 streamlit
-
-flask
