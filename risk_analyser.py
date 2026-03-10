@@ -3,9 +3,21 @@ Risk Analyser - Enriches contract clauses with case law precedents
 """
 
 import json
-from typing import List, Dict
+from typing import List, Dict, Optional
 from openai import OpenAI
+from pydantic import BaseModel, Field
 
+class PrecedentCitation(BaseModel):
+    case_title: str
+    year: int
+    paragraph_reference: str
+    relevance_score: float = Field(description="Why this case is relevant")
+
+class AnalysisResult(BaseModel):
+    legal_risk_confirmed: bool
+    precedents: List[PrecedentCitation] = Field(default_factory=list) # Add this
+    recommended_action: str
+    alternative_wording: Optional[str] = None
 
 class RiskAnalyser:
     """
@@ -76,7 +88,6 @@ class RiskAnalyser:
         prompt = f"""You are a UK contract law expert.
 
 Based on these relevant case law precedents:
-
 {context}
 
 Analyse this contract clause:
@@ -85,13 +96,16 @@ TEXT: {clause.get('text', '')}
 CURRENT RISK: {clause.get('risk_level', 'UNKNOWN')}
 REASON: {clause.get('risk_explanation', '')}
 
-Return ONLY valid JSON:
+Return ONLY valid JSON matching this schema:
 {{
-  "legal_risk_confirmed": true,
-  "precedent_support": ["how precedent 1 relates", "how precedent 2 relates"],
-  "recommended_action": "specific action to take",
-  "alternative_wording": "safer wording or null"
-}}"""
+  "legal_risk_confirmed": boolean,
+  "precedents": [
+    {{"case_title": "string", "year": integer, "paragraph_reference": "string", "relevance_score": float}}
+  ],
+  "recommended_action": "string",
+  "alternative_wording": "string"
+}}
+"""
 
         try:
             response = self.client.chat.completions.create(
@@ -100,16 +114,19 @@ Return ONLY valid JSON:
                     {"role": "system", "content": "You are a UK contract law expert. Return only valid JSON."},
                     {"role": "user", "content": prompt}
                 ],
-                temperature=0.2
+                temperature=0.2,
+                response_format={"type": "json_object"}
             )
 
             raw = response.choices[0].message.content
-            raw = raw.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
-
-            return json.loads(raw)
+            data = json.loads(raw)
+            validated_analysis = AnalysisResult(**data)
+        
+        # 3. Return as a dict for your existing pipeline
+            return validated_analysis.model_dump()
 
         except Exception as e:
-            print(f"⚠️ LLM analysis error: {e}")
+            print(f"⚠️ Validation or LLM error: {e}")
             return None
 
     def analyse_all_clauses(self, clauses: List[dict]) -> Dict:
