@@ -1,7 +1,27 @@
+# Document Processing
 pdfplumber
 python-docx
-openai
-pydantic
-python-dotenv
-streamlit
 PyMuPDF
+
+# AI/ML
+openai
+sentence-transformers
+chromadb
+
+# Data Validation
+pydantic
+
+# Environment
+python-dotenv
+
+# Case Law Fetching
+requests
+lxml
+xmltodict
+
+# Web Framework
+flask
+gunicorn
+
+# Optional: Local Demo UI
+streamlit
