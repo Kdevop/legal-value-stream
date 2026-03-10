@@ -12,82 +12,70 @@ load_dotenv()
 # environment variables
 api_key=os.getenv("API_KEY")
 endpoint=os.getenv("ENDPOINT")
+db = chromadb.Client()
+embedder = SentenceTransformer("all-MiniLM-L6-v2")
+collection = db.get_or_create_collection(
+            name="employment_cases",
+            metadata={"hnsw:space": "cosine"}
+        )
+
 
 # chat client
-chat_client = OpenAI(api_key=api_key, base_url=endpoint)
+llm = OpenAI(api_key=api_key, base_url=endpoint)
 
 #load data
-with open("employment_cases.json", "r", encoding="utf-8") as f:
-    data = json.load(f)
+def load_cases(path = "employment_cases.json"):
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
 
-cases = data["cases"]
+        cases = data["cases"]
 
-# Create a series of chunks
-chunks = []
+        # Create a series of chunks
+        chunks = []
 
-for i, item in enumerate(cases):
-    title     = item.get("title", "")
-    published = item.get("published", "")
-    content   = item.get("full_text", "")
+        for i, item in enumerate(cases):
+            title     = item.get("title", "")
+            published = item.get("published", "")
+            content   = item.get("full_text", "")
 
-    # Text that will be embedded
-    text = (
-        f"title: {title}\n"
-        f"published: {published}\n"
-        f"content: {content}"
-    )
+            # Text that will be embedded
+            text = (
+                f"title: {title}\n"
+                f"published: {published}\n"
+                f"content: {content}"
+            )
 
-    chunk = {
-        "id": f"case_{i}_{title[:50].replace(' ', '_')}",  # fix: truncate + no spaces
-        "text": text,
-        "metadata": {
-            "title"    : title,      
-            "published": published,  
-            "content"  : content     
-        }
-    }
-    chunks.append(chunk)
+            chunk = {
+                "id": f"case_{i}_{title[:50].replace(' ', '_')}",  # fix: truncate + no spaces
+                "text": text,
+                "metadata": {
+                    "title"    : title,      
+                    "published": published,  
+                    "content"  : content     
+                }
+            }
+            chunks.append(chunk)
 
+        BATCH_SIZE = 50  # insert in batches to avoid memory issues
 
-# In-memory client
-client = chromadb.Client()
+        for batch_start in range(0, len(chunks), BATCH_SIZE):
+            batch = chunks[batch_start : batch_start + BATCH_SIZE]
 
-collection = client.get_or_create_collection(
-    name="employment_cases",
-    metadata={"hnsw:space": "cosine"}
-)
+            batch_ids       = [c["id"]       for c in batch]
+            batch_texts     = [c["text"]     for c in batch]
+            batch_metadatas = [c["metadata"] for c in batch]
 
-print(f"Collection ready. Documents in DB: {collection.count()}")
+            # Generate embeddings for this batch
+            batch_embeddings = embedder.encode(batch_texts)
 
-#get embedder
-embedder = SentenceTransformer("all-MiniLM-L6-v2")
-print("Embedder ready ✅")
+            collection.add(
+                ids        = batch_ids,
+                documents  = batch_texts,
+                embeddings = batch_embeddings,
+                metadatas  = batch_metadatas
+            )
 
-
-
-BATCH_SIZE = 50  # insert in batches to avoid memory issues
-
-for batch_start in range(0, len(chunks), BATCH_SIZE):
-    batch = chunks[batch_start : batch_start + BATCH_SIZE]
-
-    batch_ids       = [c["id"]       for c in batch]
-    batch_texts     = [c["text"]     for c in batch]
-    batch_metadatas = [c["metadata"] for c in batch]
-
-    # Generate embeddings for this batch
-    batch_embeddings = embedder.encode(batch_texts)
-
-    collection.add(
-        ids        = batch_ids,
-        documents  = batch_texts,
-        embeddings = batch_embeddings,
-        metadatas  = batch_metadatas
-    )
-
-    print(f"Inserted {min(batch_start + BATCH_SIZE, len(chunks))}/{len(chunks)} chunks")
-
-print(f"\n✅ Done. Total in ChromaDB: {collection.count()}")
-
+            print(f"Inserted {min(batch_start + BATCH_SIZE, len(chunks))}/{len(chunks)} chunks")
 
 def retrieve(question, n_results=3):
     query_embedding = embedder.encode(question).tolist()
@@ -112,7 +100,7 @@ def retrieve(question, n_results=3):
 retrieve("unfair dismissal procedural failure")
 
 API = os.getenv("API_KEY")
-client = OpenAI(
+llm = OpenAI(
     base_url="https://openrouter.ai/api/v1",
     api_key=API,
 )
@@ -156,7 +144,7 @@ Return this exact JSON structure:
 }}"""
 
     # 4. Call the LLM
-    model_resp = client.chat.completions.create(
+    model_resp = llm.chat.completions.create(
         model="mistralai/ministral-3b-2512",
         messages=[
             {"role": "system", "content": "You are an employment law risk assessor."},
@@ -174,10 +162,10 @@ Return this exact JSON structure:
 
 
 # Test it
-result = assess_risk("""
-    Employee dismissed after 3 years service with no formal warnings.
-    Employer claims redundancy but hired a replacement 2 weeks later.
-    Employee is pregnant.
-""")
+#result = assess_risk("""
+   # Employee dismissed after 3 years service with no formal warnings.
+   # Employer claims redundancy but hired a replacement 2 weeks later.
+    #Employee is pregnant.
+#""")
 
-print(json.dumps(result, indent=2))
+#print(json.dumps(result, indent=2))

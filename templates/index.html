@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Case Risk Assessor</title>
+</head>
+<body>
+
+<h1>Case Risk Assessor</h1>
+
+<hr>
+
+<h2>Upload a case file</h2>
+<input type="file" id="file-input" accept=".txt,.pdf,.docx"/>
+
+<p>or paste case text below:</p>
+<textarea id="case-text" rows="6" cols="60" placeholder="e.g. Employee dismissed after 4 years, no formal warnings issued..."></textarea>
+
+<br><br>
+<button onclick="assess()">Assess Risk</button>
+<p id="err" style="color:red"></p>
+
+<hr>
+
+<div id="result" style="display:none">
+  <h2>Assessment Result</h2>
+  <p><strong>Risk Level:</strong> <span id="risk-level"></span></p>
+  <p><strong>High Risk:</strong> <span id="high-risk"></span></p>
+
+  <h3>Risk Reasons</h3>
+  <ul id="reasons"></ul>
+
+  <h3>Similar Precedents</h3>
+  <ul id="precedents"></ul>
+
+  <h3>Recommended Action</h3>
+  <p id="action"></p>
+</div>
+
+<script>
+  async function assess() {
+    const btn  = document.querySelector("button");
+    const err  = document.getElementById("err");
+    const file = document.getElementById("file-input").files[0];
+    const text = document.getElementById("case-text").value.trim();
+
+    if (!file && !text) { err.textContent = "Upload a file or paste case text."; return; }
+
+    btn.disabled = true;
+    btn.textContent = "Assessing...";
+    err.textContent = "";
+
+    try {
+      let resp;
+      if (file) {
+        const fd = new FormData(); fd.append("file", file);
+        resp = await fetch("/assess", { method: "POST", body: fd });
+      } else {
+        resp = await fetch("/assess", { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify({text}) });
+      }
+
+      if (!resp.ok) throw new Error(await resp.text());
+      const d = await resp.json();
+
+      document.getElementById("risk-level").textContent  = d.risk_level;
+      document.getElementById("high-risk").textContent   = d.is_high_risk ? "Yes" : "No";
+      document.getElementById("reasons").innerHTML       = (d.risk_reasons||[]).map(r=>`<li>${r}</li>`).join("");
+      document.getElementById("precedents").innerHTML    = (d.similar_precedents||[]).map(p=>`<li>${p}</li>`).join("");
+      document.getElementById("action").textContent      = d.recommended_action || "—";
+      document.getElementById("result").style.display   = "block";
+
+    } catch(e) {
+      err.textContent = e.message;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Assess Risk";
+    }
+  }
+</script>
+</body>
+</html>
