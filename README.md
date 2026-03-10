@@ -1,21 +1,69 @@
-# Legal Contract Risk Assessor
+Legal Contract Risk Assessor
+============================
 
-A modular tool designed to automatically parse, analyze, and assess legal risks in contracts using Retrieval-Augmented Generation (RAG) and Large Language Models.
+A modular, AI-driven framework for automated contract analysis, designed to identify legal risks in accordance with 2026 UK regulatory standards using Retrieval-Augmented Generation (RAG).
 
-## Core Features
-* **Document Parsing**: Supports PDF and DOCX file processing.
-* **Risk Detection**: Categorizes clauses (e.g., Liability, Data Training, Audit Rights) based on 2026 UK regulatory standards.
-* **Precedent Enrichment**: Automatically queries a vector database of UK employment case law to provide legal context for high-risk clauses.
-* **Structured Output**: Generates clear, actionable risk reports in JSON format.
+System Architecture & Data Flow
+-------------------------------
 
-## Technology Stack
-* **Frameworks**: Flask, Streamlit 
-* **AI/LLM**: OpenAI API (via OpenRouter), Gemini, Sentence-Transformers 
-* **Data Handling**: ChromaDB (Vector Storage), Pydantic (Validation), PyMuPDF/python-docx 
+The system operates as a multi-stage pipeline:
 
-## Getting Started
-1. **Environment**: Create a `.env` file and add your `OPENROUTER_API_KEY`.
-2. **Installation**: Install dependencies using: `pip install -r requirements.txt`.
-3. **Data Ingestion**: Run `fetch.py` to collect and store relevant UK case law precedent.
-4. **Analysis**: Use `contract_processor.py` to audit a document:
-   `python contract_processor.py path/to/contract.pdf`
+1.  **Data Ingestion (fetch.py)**: Connects to the National Archives Find Case Law API to fetch and structure UK employment case law, creating a local knowledge base.
+    
+2.  **Vector Storage (chunk.py)**: Embeds legal cases into a ChromaDB vector store using all-MiniLM-L6-v2 for efficient semantic retrieval.
+    
+3.  **Document Parsing (contract\_processor.py)**: Uses pdfplumber and python-docx to extract text from legal contracts, preserving page-level indexing.
+    
+4.  **Risk Analysis & Enrichment (risk\_analyser.py)**:
+    
+    *   **Clause Extraction**: Analyzes document segments against a 2026 risk rubric (Liability, Data Training, Audit Rights, etc.) using structured JSON output.
+        
+    *   **Legal Precedent Enrichment**: Automatically cross-references high-risk clauses against the vector database to provide relevant case law context.
+        
+
+Technology Stack
+----------------
+
+*   **AI/LLM**: Multi-model support via OpenRouter (Gemini, GPT-4o-mini, Mistral).
+    
+*   **Vector Search**: ChromaDB combined with sentence-transformers for semantic context retrieval.
+    
+*   **Data & Validation**: Pydantic for schema-validated JSON outputs.
+    
+*   **Backend**: Flask for API orchestration.
+    
+
+Getting Started
+---------------
+
+### 1\. Prerequisites
+
+Ensure you have an .env file in the project root containing your API credentials:
+
+```Plaintext
+OPENROUTER_API_KEY=your_key_here   
+```
+
+### 2\. Installation
+
+Install the necessary dependencies:
+
+``` Bash  
+pip install -r requirements.txt
+```
+
+### 3\. Data Ingestion
+
+Populate the vector store with relevant UK case law precedents:
+
+``` Bash 
+python fetch.py
+```
+
+### 4\. Running an Audit
+
+Analyze a contract file to generate a structured risk report:
+
+``` Bash  
+python contract_processor.py path/to/contract.pdf --output results.json
+ ```
