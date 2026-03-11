@@ -185,7 +185,7 @@ def assess_risk(text: str) -> dict:
         return {"total_clauses": 0, "high_risk_count": 0, "clauses": []}
 
     # Stage 2 - enrich RED clauses with case law precedents
-    analyser = RiskAnalyser.RiskAnalyser(
+    analyser = RiskAnalyser(
         collection=store.collection,
         embedder=store.embedder,
         api_key=api_key
