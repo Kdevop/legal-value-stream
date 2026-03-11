@@ -18,33 +18,32 @@ def result():
 
 @app.route("/assess", methods=["POST"])
 def assess():
-    # Handle file upload
-    if "file" in request.files:
-        f = request.files["file"]
-        filename = f.filename.lower()
+    # only accept file uploads; text entry removed
+    if "file" not in request.files:
+        return jsonify({"error": "No file uploaded"}), 400
 
-        if filename.endswith(".pdf"):
-            try:
-                import pypdf
-                reader = pypdf.PdfReader(f)
-                text = " ".join(page.extract_text() or "" for page in reader.pages)
-            except ImportError:
-                return jsonify({"error": "pypdf not installed. Run: pip install pypdf"}), 500
+    f = request.files["file"]
+    filename = f.filename.lower()
 
-        elif filename.endswith(".docx"):
-            try:
-                import docx
-                doc = docx.Document(f)
-                text = " ".join(p.text for p in doc.paragraphs)
-            except ImportError:
-                return jsonify({"error": "python-docx not installed. Run: pip install python-docx"}), 500
+    if filename.endswith(".pdf"):
+        try:
+            import pypdf
+            reader = pypdf.PdfReader(f)
+            text = " ".join(page.extract_text() or "" for page in reader.pages)
+        except ImportError:
+            return jsonify({"error": "pypdf not installed. Run: pip install pypdf"}), 500
 
-        else:
-            # .txt or any plain text file
-            text = f.read().decode("utf-8", errors="ignore")
+    elif filename.endswith(".docx"):
+        try:
+            import docx
+            doc = docx.Document(f)
+            text = " ".join(p.text for p in doc.paragraphs)
+        except ImportError:
+            return jsonify({"error": "python-docx not installed. Run: pip install python-docx"}), 500
 
     else:
-        text = (request.json or {}).get("text", "")
+        # unsupported extensions
+        return jsonify({"error": "Unsupported file type. Only PDF and DOCX are allowed."}), 400
 
     if not text or not text.strip():
         return jsonify({"error": "No text could be extracted from the submission"}), 400

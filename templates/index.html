@@ -116,24 +116,13 @@ footer p { font-size: 0.68rem; color: rgba(255,255,255,0.3); letter-spacing: 0.0
     <h2>Submit a case for risk evaluation</h2>
     <p>Describe the facts of the employment matter, or upload a document. The system will retrieve relevant EAT precedents and return a structured risk assessment.</p>
 
-    <div class="input-tabs">
-      <button class="tab-btn active" onclick="switchTab('text', this)">Paste Text</button>
-      <button class="tab-btn" onclick="switchTab('file', this)">Upload Document</button>
-    </div>
-
-    <div id="tab-text" class="tab-panel active">
-      <textarea id="case-text" placeholder="e.g. The claimant was employed as a senior account manager for 6 years. Following a restructure, the respondent dismissed the claimant on grounds of redundancy. No formal selection criteria were disclosed. The claimant is currently on maternity leave." oninput="updateCount()"></textarea>
-      <div class="char-count"><span id="char-count">0</span> characters</div>
-    </div>
-
-    <div id="tab-file" class="tab-panel">
-      <div class="upload-area" id="drop-zone">
-        <input type="file" id="file-input" accept=".txt,.pdf,.doc,.docx"/>
-        <div class="upload-icon">&#8679;</div>
-        <p>Drop a file here or click to browse</p>
-        <p style="font-size:0.72rem;margin-top:0.3rem">Accepts .txt, .pdf, .doc, .docx</p>
-        <div class="fname" id="fname"></div>
-      </div>
+    <!-- only file upload allowed now -->
+    <div class="upload-area" id="drop-zone">
+      <input type="file" id="file-input" accept=".pdf,.doc,.docx"/>
+      <div class="upload-icon">&#8679;</div>
+      <p>Drop a file here or click to browse</p>
+      <p style="font-size:0.72rem;margin-top:0.3rem">Accepts .pdf, .doc, .docx only</p>
+      <div class="fname" id="fname"></div>
     </div>
 
     <div class="btn-row">
@@ -173,17 +162,6 @@ footer p { font-size: 0.68rem; color: rgba(255,255,255,0.3); letter-spacing: 0.0
 </footer>
 
 <script>
-  function switchTab(name, el) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    el.classList.add('active');
-    document.getElementById('tab-' + name).classList.add('active');
-  }
-
-  function updateCount() {
-    document.getElementById("char-count").textContent = document.getElementById("case-text").value.length;
-  }
-
   const dz = document.getElementById("drop-zone");
   const fi = document.getElementById("file-input");
   fi.onchange = () => { document.getElementById("fname").textContent = fi.files[0] ? fi.files[0].name : ""; };
@@ -199,25 +177,21 @@ footer p { font-size: 0.68rem; color: rgba(255,255,255,0.3); letter-spacing: 0.0
     const btn  = document.getElementById("btn");
     const err  = document.getElementById("err");
     const file = fi.files[0];
-    const text = document.getElementById("case-text").value.trim();
-    const activeTab = document.querySelector('.tab-panel.active').id;
 
-    if (activeTab === 'tab-text' && !text) { err.style.display = "block"; err.textContent = "Please provide case details before submitting."; return; }
-    if (activeTab === 'tab-file' && !file) { err.style.display = "block"; err.textContent = "Please select a file to upload."; return; }
+    if (!file) {
+      err.style.display = "block";
+      err.textContent = "Please select a file to upload.";
+      return;
+    }
 
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span>Analysing...';
     err.style.display = "none";
 
     try {
-      let resp;
-      if (activeTab === 'tab-file' && file) {
-        const fd = new FormData();
-        fd.append("file", file);
-        resp = await fetch("/assess", { method: "POST", body: fd });
-      } else {
-        resp = await fetch("/assess", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
-      }
+      const fd = new FormData();
+      fd.append("file", file);
+      const resp = await fetch("/assess", { method: "POST", body: fd });
 
       if (!resp.ok) throw new Error(await resp.text());
       const d = await resp.json();
