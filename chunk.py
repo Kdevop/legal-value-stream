@@ -69,7 +69,8 @@ class VectorStoreManager:
                 "metadata": {
                     "title": title,
                     "published": published,
-                    "content": content
+                    "content": content,
+                    "url_html": item.get("url_html", "")
                 }
             }
             chunks.append(chunk)

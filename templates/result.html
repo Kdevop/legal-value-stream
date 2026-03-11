@@ -138,8 +138,14 @@ const clausesHtml = d.clauses.map(c => {
   const flag = c.risk_flag;  // RED, YELLOW, GREEN
   const level = flag === "RED" ? "high" : flag === "YELLOW" ? "medium" : "low";
   const action = c.legal_analysis?.recommended_action || c.risk_explanation;
-  const precedentsHtml = (c.precedents || [])
-    .map(p => `<li>${p.title} (${p.date})</li>`).join("") || "<li>None retrieved</li>";
+  const precedentsHtml = (c.precedents || []).map(p => {
+  const url = p.uri
+    ? `https://caselaw.nationalarchives.gov.uk${p.uri}`
+    : null;
+  return url
+    ? `<li><a href="${url}" target="_blank" style="color:var(--navy);text-decoration:underline">${p.title} (${p.date})</a></li>`
+    : `<li>${p.title} (${p.date})</li>`;
+}).join("") || "<li>None retrieved</li>";
 
   return `
     <div class="verdict-bar ${level}" style="margin-bottom:1rem">
@@ -149,6 +155,12 @@ const clausesHtml = d.clauses.map(c => {
       </div>
       <div class="verdict-flag">${flag}</div>
     </div>
+
+    <div class="result-block" style="margin-bottom:1.5rem;border-left:3px solid var(--gold);padding:1.2rem 1.6rem;background:#fff">
+      <h4>Verbatim Extract — Clause ${c.clause_number}, Page ${c.page_number}</h4>
+      <ul><li style="font-style:italic">"${c.text}"</li></ul>
+    </div>
+
     <div class="result-grid" style="margin-bottom:2rem">
       <div class="result-block">
         <h4>Risk Explanation</h4>
@@ -156,9 +168,15 @@ const clausesHtml = d.clauses.map(c => {
       </div>
       <div class="result-block">
         <h4>Relevant Precedents</h4>
-        <ul>${precedentsHtml}</ul>
+        <ul>${(c.precedents || []).map(p => {
+          const url = p.url_html || null;
+          return url
+            ? `<li><a href="${url}" target="_blank" style="color:var(--navy);text-decoration:underline">${p.title} (${p.date})</a></li>`
+            : `<li>${p.title} (${p.date})</li>`;
+        }).join("") || "<li>None retrieved</li>"}</ul>
       </div>
     </div>
+
     <div class="action-block" style="margin-bottom:2rem">
       <div class="action-icon">S</div>
       <div>

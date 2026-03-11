@@ -65,7 +65,8 @@ class RiskAnalyser:
                 "title": meta.get('title', 'Unknown'),
                 "date": meta.get('published', '')[:10],
                 "relevance_score": round((2 - dist) / 2, 3),
-                "excerpt": doc[:400]
+                "excerpt": doc[:400],
+                "url_html": meta.get('url_html', '')
             }
             precedents.append(precedent)
 

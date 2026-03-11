@@ -31,6 +31,7 @@ class ClauseModel(BaseModel):
     risk_flag: str = Field(description="RED, YELLOW, or GREEN")
     risk_explanation: str = Field(description="Reasoning for the risk flag based on 2026 standards")
     risk_score: int = Field(ge=1, le=10, description="1-10 priority score")
+    clause_number: int = Field(default=0, description="Sequential clause number across the document")
 
 
 class ContractAnalysis(BaseModel):
@@ -163,6 +164,11 @@ Rules:
 - Do not invent clauses.
 - If no relevant clauses are present return: {"clauses": []}
 - Do not include any text outside the JSON.
+- Treat each numbered clause as a separate item — do not combine multiple clauses into one.
+- If governing law is NOT specified anywhere in the document, flag it as RED with clause_type "GOVERNING LAW".
+- If warranties or liability protections are absent, flag the absence itself as RED.
+- Vague language like "as it sees fit", "partners", or "until parties decide" must each be flagged separately.
+- Do not skip clauses because they seem minor — flag everything that matches the rubric.
 
 Risk Rubric:
 
@@ -200,7 +206,7 @@ Risk Score Guidance (1–10):
         :param pages: List of dicts [{'page': 1, 'text': '...'}, ...]
         """
         all_extracted_clauses = []
-        
+        clause_counter = 0
         print(f"Extracting clauses from {len(pages)} pages...")
 
         for page_data in pages:
@@ -223,7 +229,8 @@ Risk Score Guidance (1–10):
 
                 for clause in page_results.get("clauses", []):
                     clause["page_found"] = page_num
-                    
+                    clause_counter += 1
+                    clause["clause_number"] = clause_counter
                     validated_clause = ClauseModel(**clause)
                     all_extracted_clauses.append(validated_clause.model_dump())
 
