@@ -2,8 +2,10 @@
 pdfplumber
 python-docx
 PyMuPDF
+docx
 
 # AI/ML
+
 openai
 sentence-transformers
 chromadb
