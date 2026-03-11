@@ -5,7 +5,8 @@ import chunk as rag
 app = Flask(__name__)
 
 # Load cases into ChromaDB on startup
-rag.load_cases("employment_cases.json")
+store = rag.VectorStoreManager()
+store.load_cases("employment_cases.json")
 
 @app.route("/")
 def index():
@@ -48,7 +49,7 @@ def assess():
     if not text or not text.strip():
         return jsonify({"error": "No text could be extracted from the submission"}), 400
 
-    return jsonify(rag.assess_risk(text))
+    return jsonify(store.assess_risk(text))
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
