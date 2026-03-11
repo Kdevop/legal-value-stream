@@ -43,7 +43,7 @@ class RiskAnalyser:
             return {**clause, "precedents": [], "legal_analysis": None}
 
         # Query vector DB
-        query_text = f"{clause.get('clause_type', clause.get('type', '')}: {clause.get('text', '')}"
+        query_text = f"{clause.get('clause_type', clause.get('type', ''))}: {clause.get('text', '')}"
         query_embedding = self.embedder.encode(query_text).tolist()
 
         results = self.collection.query(
