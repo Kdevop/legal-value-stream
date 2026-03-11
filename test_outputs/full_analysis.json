@@ -1,0 +1,533 @@
+{
+  "total_clauses": 16,
+  "high_risk_count": 13,
+  "clauses": [
+    {
+      "clause_type": "Term",
+      "text": "Agreement lasts 36 months, non-cancellable.",
+      "page_number": 1,
+      "risk_flag": "RED",
+      "risk_explanation": "Agreement is non-cancellable, offering no flexibility for the client.",
+      "risk_score": 9,
+      "risk_level": "HIGH",
+      "precedents": [
+        {
+          "title": "A Darlington v London Borough of Islington",
+          "date": "2026-01-13",
+          "relevance_score": 0.578,
+          "excerpt": "title: A Darlington v London Borough of Islington\npublished: 2026-01-13T00:00:00+00:00\ncontent: EAT 2026 11 [2026] EAT 11 EA-2023-000957-DXA 1.4.0 4eda1c3f84b73a350b454b6953640988399eaa101822b12464cf0248d7ddf27b 7.4.0 #judgment { font-size: 12pt; font-family: 'Calibri, sans-serif'; } #judgment .ListParagraph { margin-left: 0.5in; } #judgment .NormalWeb { font-family: 'Times New Roman'; } #judgment"
+        },
+        {
+          "title": "Bank of Africa United Kingdom Plc & Ors v N Tahri Hassani",
+          "date": "2026-02-11",
+          "relevance_score": 0.566,
+          "excerpt": "title: Bank of Africa United Kingdom Plc & Ors v N Tahri Hassani\npublished: 2026-02-11T00:00:00+00:00\ncontent: EAT 2026 27 [2026] EAT 27 EA-2023-000502-DXA 1.4.0 e69241dc4f7d204a6149c24c26cff91dfc6509f9860b5f18a6642618c05d6369 7.4.0 #judgment { font-size: 12pt; font-family: 'Calibri, sans-serif'; } #judgment .ListParagraph { margin-left: 0.5in; } #judgment .NormalWeb { font-family: 'Times New Roma"
+        },
+        {
+          "title": "R J Bryce v Active Security Solutions Limited & Anor",
+          "date": "2026-01-21",
+          "relevance_score": 0.563,
+          "excerpt": "title: R J Bryce v Active Security Solutions Limited & Anor\npublished: 2026-01-21T00:00:00+00:00\ncontent: EAT 2026 16 [2026] EAT 16 EA-2023-000109-TH 1.4.0 1ed50055ed303c5c8e865de51fcf16cb9ff1d9e45bdd3b9c7509a1926dc182fb 7.4.0 #judgment { font-size: 12pt; font-family: 'Calibri, sans-serif'; } #judgment .Heading4 { font-weight: bold; font-family: 'Times New Roman'; } #judgment .ListParagraph { marg"
+        }
+      ],
+      "legal_analysis": {
+        "legal_risk_confirmed": true,
+        "precedent_support": [
+          "In A Darlington v London Borough of Islington, the court emphasized the importance of flexibility in contractual agreements, which is lacking in a non-cancellable clause.",
+          "In R J Bryce v Active Security Solutions Limited & Anor, the court highlighted the potential for unfairness in agreements that do not allow for cancellation, reinforcing the need for clients to have exit options."
+        ],
+        "recommended_action": "Negotiate the clause to include a cancellation option or a review period to mitigate risks.",
+        "alternative_wording": "Agreement lasts 36 months, cancellable with 30 days' notice."
+      }
+    },
+    {
+      "clause_type": "Term",
+      "text": "Automatic renewal for 5-year periods unless terminated with 365 days\u2019 notice.",
+      "page_number": 1,
+      "risk_flag": "YELLOW",
+      "risk_explanation": "Long notice period (365 days) for termination of renewal, creating a significant commitment.",
+      "risk_score": 6,
+      "risk_level": "MEDIUM",
+      "precedents": [],
+      "legal_analysis": null
+    },
+    {
+      "clause_type": "Fees",
+      "text": "No refunds under any circumstances.",
+      "page_number": 1,
+      "risk_flag": "RED",
+      "risk_explanation": "No refunds means client loses all payment regardless of service failure or early termination.",
+      "risk_score": 8,
+      "risk_level": "HIGH",
+      "precedents": [
+        {
+          "title": "A Darlington v London Borough of Islington",
+          "date": "2026-01-13",
+          "relevance_score": 0.577,
+          "excerpt": "title: A Darlington v London Borough of Islington\npublished: 2026-01-13T00:00:00+00:00\ncontent: EAT 2026 11 [2026] EAT 11 EA-2023-000957-DXA 1.4.0 4eda1c3f84b73a350b454b6953640988399eaa101822b12464cf0248d7ddf27b 7.4.0 #judgment { font-size: 12pt; font-family: 'Calibri, sans-serif'; } #judgment .ListParagraph { margin-left: 0.5in; } #judgment .NormalWeb { font-family: 'Times New Roman'; } #judgment"
+        },
+        {
+          "title": "G Mangwanya v National Association of Citizens Advice Bureaux",
+          "date": "2025-11-27",
+          "relevance_score": 0.563,
+          "excerpt": "title: G Mangwanya v National Association of Citizens Advice Bureaux\npublished: 2025-11-27T00:00:00+00:00\ncontent: EAT 2025 175 [2025] EAT 175 EA-2023-000283-NK 0.27.1 acbbbce2cf1d71eb4eac284815faf4194b94f4c10350126e845c5b0742aa6a60 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .Li"
+        },
+        {
+          "title": "T Turner v Western Mortgage Services Ltd",
+          "date": "2025-12-19",
+          "relevance_score": 0.561,
+          "excerpt": "title: T Turner v Western Mortgage Services Ltd\npublished: 2025-12-19T00:00:00+00:00\ncontent: EAT 2025 191 [2025] EAT 191 EA-2023-000554-LA 1.3.0 ba259249dc331c2c30865d4aa9a0a1e27c2dbdc61d62985ec60102ed472e0f41 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph { } #judgm"
+        }
+      ],
+      "legal_analysis": {
+        "legal_risk_confirmed": true,
+        "precedent_support": [
+          "In A Darlington v London Borough of Islington, the court emphasized the importance of fairness in contractual obligations, suggesting that a clause preventing refunds could be deemed unconscionable if it leads to unjust outcomes.",
+          "In G Mangwanya v National Association of Citizens Advice Bureaux, the court highlighted the necessity for contracts to allow for reasonable remedies in cases of service failure, which contradicts the absolute no refund clause."
+        ],
+        "recommended_action": "Revise the clause to allow for refunds in cases of service failure or early termination to mitigate legal risks.",
+        "alternative_wording": "Refunds may be issued at the discretion of the service provider in cases of service failure or early termination."
+      }
+    },
+    {
+      "clause_type": "Data Protection",
+      "text": "Provider may transfer data to any country, with no safeguards.",
+      "page_number": 1,
+      "risk_flag": "RED",
+      "risk_explanation": "No data transfer safeguards pose a significant risk of non-compliance with data protection laws.",
+      "risk_score": 9,
+      "risk_level": "HIGH",
+      "precedents": [
+        {
+          "title": "Bank of Africa United Kingdom Plc & Ors v N Tahri Hassani",
+          "date": "2026-02-11",
+          "relevance_score": 0.539,
+          "excerpt": "title: Bank of Africa United Kingdom Plc & Ors v N Tahri Hassani\npublished: 2026-02-11T00:00:00+00:00\ncontent: EAT 2026 27 [2026] EAT 27 EA-2023-000502-DXA 1.4.0 e69241dc4f7d204a6149c24c26cff91dfc6509f9860b5f18a6642618c05d6369 7.4.0 #judgment { font-size: 12pt; font-family: 'Calibri, sans-serif'; } #judgment .ListParagraph { margin-left: 0.5in; } #judgment .NormalWeb { font-family: 'Times New Roma"
+        },
+        {
+          "title": "Yovka Kisheva v Secure Frontline Services Limited",
+          "date": "2025-12-11",
+          "relevance_score": 0.521,
+          "excerpt": "title: Yovka Kisheva v Secure Frontline Services Limited\npublished: 2025-12-11T00:00:00+00:00\ncontent: EAT 2025 194 [2025] EAT 194 EA-2023-001027-NK 1.4.0 6c8b7cc5a7e3a1b3f5d217a098285b7ab34a5041881a91523175dba9436bb5ce 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph {"
+        },
+        {
+          "title": "Liliana Vassallo v Mizuho International Plc & Anor",
+          "date": "2025-09-17",
+          "relevance_score": 0.515,
+          "excerpt": "title: Liliana Vassallo v Mizuho International Plc & Anor\npublished: 2025-09-17T00:00:00+00:00\ncontent: EAT 2025 131 [2025] EAT 131 EA-2024-000129-JOJ 0.27.1 24591adba951d88a60ecbbaec5e27a8ebe6d18eaeabccef045839311998c4f8f 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagrap"
+        }
+      ],
+      "legal_analysis": {
+        "legal_risk_confirmed": true,
+        "precedent_support": [
+          "In Yovka Kisheva v Secure Frontline Services Limited, the court emphasized the importance of compliance with data protection laws, which supports the concern regarding the lack of safeguards in the current clause.",
+          "The case of Liliana Vassallo v Mizuho International Plc & Anor highlighted the implications of inadequate data transfer protocols, reinforcing the high risk associated with the current clause."
+        ],
+        "recommended_action": "Revise the clause to include specific data transfer safeguards and compliance measures with data protection laws.",
+        "alternative_wording": "Provider may transfer data to any country, provided that adequate safeguards are in place to ensure compliance with applicable data protection laws."
+      }
+    },
+    {
+      "clause_type": "Data Protection",
+      "text": "Provider may appoint sub-processors without notice.",
+      "page_number": 1,
+      "risk_flag": "RED",
+      "risk_explanation": "Client has no visibility or control over sub-processors handling their data.",
+      "risk_score": 7,
+      "risk_level": "HIGH",
+      "precedents": [
+        {
+          "title": "A Darlington v London Borough of Islington",
+          "date": "2026-01-13",
+          "relevance_score": 0.537,
+          "excerpt": "title: A Darlington v London Borough of Islington\npublished: 2026-01-13T00:00:00+00:00\ncontent: EAT 2026 11 [2026] EAT 11 EA-2023-000957-DXA 1.4.0 4eda1c3f84b73a350b454b6953640988399eaa101822b12464cf0248d7ddf27b 7.4.0 #judgment { font-size: 12pt; font-family: 'Calibri, sans-serif'; } #judgment .ListParagraph { margin-left: 0.5in; } #judgment .NormalWeb { font-family: 'Times New Roman'; } #judgment"
+        },
+        {
+          "title": "QR v The GI Group Limited",
+          "date": "2025-12-08",
+          "relevance_score": 0.534,
+          "excerpt": "title: QR v The GI Group Limited\npublished: 2025-12-08T00:00:00+00:00\ncontent: EAT 2025 178 [2025] EAT 178 EA-2024-001024-BA 1.2.0 1ccc042cfd8653c68a7b424e600931eb33b6174d64372930b9b9e8fa29b88409 7.4.0 #judgment { font-size: 11pt; font-family: Aptos; } #judgment .Normal { font-size: 11pt; } #judgment .Heading1 { font-size: 20pt; color: #0F4761; } #judgment .Heading2 { font-size: 16pt; color: #0F47"
+        },
+        {
+          "title": "N Ahmed v Capital Arches Group Limited",
+          "date": "2025-09-17",
+          "relevance_score": 0.532,
+          "excerpt": "title: N Ahmed v Capital Arches Group Limited\npublished: 2025-09-17T00:00:00+00:00\ncontent: EAT 2025 133 [2025] EAT 133 EA-2023-001277-BA 0.27.1 139be4bd21e77f49c0b4ba80102eeaae201c68badabf59fd5daf60166051bdae 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph { } #judgme"
+        }
+      ],
+      "legal_analysis": {
+        "legal_risk_confirmed": true,
+        "precedent_support": [
+          "In A Darlington v London Borough of Islington, the court emphasized the importance of transparency and control in contractual relationships, which supports the concern over sub-processors handling client data without notice.",
+          "QR v The GI Group Limited highlighted the necessity for parties to have clear agreements regarding data handling and third-party involvement, reinforcing the risk associated with the lack of visibility over sub-processors."
+        ],
+        "recommended_action": "Negotiate for a clause that requires the Provider to obtain prior written consent from the Client before appointing any sub-processors.",
+        "alternative_wording": "Provider may appoint sub-processors only with prior written consent from the Client, ensuring full transparency and control over data handling."
+      }
+    },
+    {
+      "clause_type": "Confidentiality",
+      "text": "Confidentiality obligations last 12 months only.",
+      "page_number": 1,
+      "risk_flag": "YELLOW",
+      "risk_explanation": "Short confidentiality period may not be sufficient to protect sensitive information.",
+      "risk_score": 5,
+      "risk_level": "MEDIUM",
+      "precedents": [],
+      "legal_analysis": null
+    },
+    {
+      "clause_type": "Intellectual Property",
+      "text": "Provider owns all IP, including derivative works created from Client Data.",
+      "page_number": 1,
+      "risk_flag": "RED",
+      "risk_explanation": "Provider claims ownership of IP derived from client data, potentially stripping client of valuable assets.",
+      "risk_score": 9,
+      "risk_level": "HIGH",
+      "precedents": [
+        {
+          "title": "Ernest Milrine v DHL Services Limited",
+          "date": "2026-02-13",
+          "relevance_score": 0.554,
+          "excerpt": "title: Ernest Milrine v DHL Services Limited\npublished: 2026-02-13T00:00:00+00:00\ncontent: EAT 2026 31 [2026] EAT 31 EA-2023-SCO-000080-JP 1.4.0 69883c16fb6d3800e0d31bad8bffa9ef8a66caba204a5f64453797680c77e74a 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .Heading1 { font-size: 20pt; color: #365F91; } #judgment .Heading2 { font-size: 16pt; color: #365F91; } #judgme"
+        },
+        {
+          "title": "T Turner v Western Mortgage Services Ltd",
+          "date": "2025-12-19",
+          "relevance_score": 0.544,
+          "excerpt": "title: T Turner v Western Mortgage Services Ltd\npublished: 2025-12-19T00:00:00+00:00\ncontent: EAT 2025 191 [2025] EAT 191 EA-2023-000554-LA 1.3.0 ba259249dc331c2c30865d4aa9a0a1e27c2dbdc61d62985ec60102ed472e0f41 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph { } #judgm"
+        },
+        {
+          "title": "A Darlington v London Borough of Islington",
+          "date": "2026-01-13",
+          "relevance_score": 0.536,
+          "excerpt": "title: A Darlington v London Borough of Islington\npublished: 2026-01-13T00:00:00+00:00\ncontent: EAT 2026 11 [2026] EAT 11 EA-2023-000957-DXA 1.4.0 4eda1c3f84b73a350b454b6953640988399eaa101822b12464cf0248d7ddf27b 7.4.0 #judgment { font-size: 12pt; font-family: 'Calibri, sans-serif'; } #judgment .ListParagraph { margin-left: 0.5in; } #judgment .NormalWeb { font-family: 'Times New Roman'; } #judgment"
+        }
+      ],
+      "legal_analysis": {
+        "legal_risk_confirmed": true,
+        "precedent_support": [
+          "In Ernest Milrine v DHL Services Limited, the court emphasized the importance of clearly defined ownership rights in contracts, particularly regarding intellectual property derived from client contributions.",
+          "In T Turner v Western Mortgage Services Ltd, the court ruled that ambiguous clauses regarding ownership of derivative works could lead to disputes, highlighting the need for clarity to protect client interests."
+        ],
+        "recommended_action": "Negotiate the clause to ensure that the client retains ownership of their data and any derivative works created from it.",
+        "alternative_wording": "Provider owns all IP derived from Client Data, but Client retains ownership of the original Client Data and any derivative works created from it."
+      }
+    },
+    {
+      "clause_type": "Data Training",
+      "text": "Provider may use Client Data to \u201cimprove its products.\u201d",
+      "page_number": 1,
+      "risk_flag": "RED",
+      "risk_explanation": "Provider can use client data to train its products, potentially exposing sensitive information or creating competitive disadvantage.",
+      "risk_score": 9,
+      "risk_level": "HIGH",
+      "precedents": [
+        {
+          "title": "J C Betancourt v United Kingdom Research and Innovation",
+          "date": "2025-10-23",
+          "relevance_score": 0.579,
+          "excerpt": "title: J C Betancourt v United Kingdom Research and Innovation\npublished: 2025-10-23T00:00:00+00:00\ncontent: EAT 2025 148 [2025] EAT 148 EA-2024-000222-NK 0.27.1 c8056dce6f72c3e05116103fe35e2ea711ad238529cd18f84d480814e3046909 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListPara"
+        },
+        {
+          "title": "Neil Duke v B & M Retail Ltd",
+          "date": "2025-12-23",
+          "relevance_score": 0.574,
+          "excerpt": "title: Neil Duke v B & M Retail Ltd\npublished: 2025-12-23T00:00:00+00:00\ncontent: EAT 2025 195 [2025] EAT 195 EA-2023-001072-DXA 1.3.0 eb760db636cfd5bc8468b87a8a7a7ca162bbbeb9017d0ba9ce13ed81efa6681f 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph { } #judgment .TableP"
+        },
+        {
+          "title": "OE Olarewaju v Bupa Care Services Limited",
+          "date": "2026-03-09",
+          "relevance_score": 0.567,
+          "excerpt": "title: OE Olarewaju v Bupa Care Services Limited\npublished: 2026-03-09T00:00:00+00:00\ncontent: EAT 2026 38 [2026] EAT 38 EA-2025-001597-NK 1.5.0 a33ea63764084cb3ee85d26c51e1a8c5ca70b4636934647b378643b1d2e0f0fc 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph { } #judgme"
+        }
+      ],
+      "legal_analysis": {
+        "legal_risk_confirmed": true,
+        "precedent_support": [
+          "In J C Betancourt v United Kingdom Research and Innovation, the court emphasized the importance of data protection and the potential risks associated with the misuse of sensitive information, which aligns with the concerns regarding the use of Client Data.",
+          "In Neil Duke v B & M Retail Ltd, the court addressed issues related to the handling of personal data and the implications for competitive advantage, reinforcing the need for clarity in data usage clauses."
+        ],
+        "recommended_action": "Revise the clause to specify the types of data that can be used and the purposes for which it can be used, ensuring compliance with data protection regulations.",
+        "alternative_wording": "Provider may use anonymized Client Data solely for the purpose of improving its products, ensuring that no sensitive information is disclosed."
+      }
+    },
+    {
+      "clause_type": "Service Levels",
+      "text": "No uptime commitment.",
+      "page_number": 1,
+      "risk_flag": "RED",
+      "risk_explanation": "Lack of uptime commitment means no guarantee of service availability.",
+      "risk_score": 8,
+      "risk_level": "HIGH",
+      "precedents": [
+        {
+          "title": "R J Bryce v Active Security Solutions Limited & Anor",
+          "date": "2026-01-21",
+          "relevance_score": 0.537,
+          "excerpt": "title: R J Bryce v Active Security Solutions Limited & Anor\npublished: 2026-01-21T00:00:00+00:00\ncontent: EAT 2026 16 [2026] EAT 16 EA-2023-000109-TH 1.4.0 1ed50055ed303c5c8e865de51fcf16cb9ff1d9e45bdd3b9c7509a1926dc182fb 7.4.0 #judgment { font-size: 12pt; font-family: 'Calibri, sans-serif'; } #judgment .Heading4 { font-weight: bold; font-family: 'Times New Roman'; } #judgment .ListParagraph { marg"
+        },
+        {
+          "title": "T Turner v Western Mortgage Services Ltd",
+          "date": "2025-12-19",
+          "relevance_score": 0.536,
+          "excerpt": "title: T Turner v Western Mortgage Services Ltd\npublished: 2025-12-19T00:00:00+00:00\ncontent: EAT 2025 191 [2025] EAT 191 EA-2023-000554-LA 1.3.0 ba259249dc331c2c30865d4aa9a0a1e27c2dbdc61d62985ec60102ed472e0f41 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph { } #judgm"
+        },
+        {
+          "title": "G Mangwanya v National Association of Citizens Advice Bureaux",
+          "date": "2025-11-27",
+          "relevance_score": 0.535,
+          "excerpt": "title: G Mangwanya v National Association of Citizens Advice Bureaux\npublished: 2025-11-27T00:00:00+00:00\ncontent: EAT 2025 175 [2025] EAT 175 EA-2023-000283-NK 0.27.1 acbbbce2cf1d71eb4eac284815faf4194b94f4c10350126e845c5b0742aa6a60 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .Li"
+        }
+      ],
+      "legal_analysis": {
+        "legal_risk_confirmed": true,
+        "precedent_support": [
+          "In R J Bryce v Active Security Solutions Limited & Anor, the absence of clear service commitments led to disputes regarding service availability, highlighting the importance of uptime guarantees.",
+          "In T Turner v Western Mortgage Services Ltd, the court emphasized the necessity of explicit terms in contracts to avoid ambiguity, which relates to the risks associated with a lack of uptime commitment."
+        ],
+        "recommended_action": "Include a specific uptime commitment in the contract to mitigate risks associated with service availability.",
+        "alternative_wording": "We guarantee a minimum uptime of 99.9% per month."
+      }
+    },
+    {
+      "clause_type": "Service Levels",
+      "text": "No support obligations.",
+      "page_number": 1,
+      "risk_flag": "RED",
+      "risk_explanation": "No support obligations means client has no recourse for issues or assistance.",
+      "risk_score": 8,
+      "risk_level": "HIGH",
+      "precedents": [
+        {
+          "title": "London Ambulance Service NHS Trust v I Sodola (Debarred)",
+          "date": "2026-01-09",
+          "relevance_score": 0.608,
+          "excerpt": "title: London Ambulance Service NHS Trust v I Sodola (Debarred)\npublished: 2026-01-09T00:00:00+00:00\ncontent: EAT 2026 6 [2026] EAT 6 EA-2023-000240-DXA 1.4.0 c23a140b9a9f814feb30e51d7cb087b7b453bfe33074b80f8f6d19a52e7395f5 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagra"
+        },
+        {
+          "title": "Dr B Jones v Viiv Healthcare UK Limited",
+          "date": "2026-01-30",
+          "relevance_score": 0.607,
+          "excerpt": "title: Dr B Jones v Viiv Healthcare UK Limited\npublished: 2026-01-30T00:00:00+00:00\ncontent: EAT 2026 24 [2026] EAT 24 EA-2024-000545-OO 1.4.0 7e1fa5d478bd5a51fa32cfbccf01dd07e854cfa812dcfb4547ab7695b488947d 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph { } #judgment"
+        },
+        {
+          "title": "Yovka Kisheva v Secure Frontline Services Limited",
+          "date": "2025-12-11",
+          "relevance_score": 0.605,
+          "excerpt": "title: Yovka Kisheva v Secure Frontline Services Limited\npublished: 2025-12-11T00:00:00+00:00\ncontent: EAT 2025 194 [2025] EAT 194 EA-2023-001027-NK 1.4.0 6c8b7cc5a7e3a1b3f5d217a098285b7ab34a5041881a91523175dba9436bb5ce 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph {"
+        }
+      ],
+      "legal_analysis": {
+        "legal_risk_confirmed": true,
+        "precedent_support": [
+          "In London Ambulance Service NHS Trust v I Sodola, the court emphasized the importance of contractual obligations and the implications of lacking support, which aligns with the high risk of having no support obligations.",
+          "In Dr B Jones v Viiv Healthcare UK Limited, the court highlighted the necessity for clear support terms in contracts to avoid disputes, reinforcing the risk associated with the absence of support obligations."
+        ],
+        "recommended_action": "Negotiate the inclusion of support obligations to mitigate risks.",
+        "alternative_wording": "The provider shall offer support services as necessary to address client issues."
+      }
+    },
+    {
+      "clause_type": "Liability",
+      "text": "Provider\u2019s total liability is capped at \u00a35,000.",
+      "page_number": 1,
+      "risk_flag": "RED",
+      "risk_explanation": "Liability cap (\u00a35,000) is extremely low compared to contract value (\u00a3250,000/year), offering minimal protection.",
+      "risk_score": 10,
+      "risk_level": "HIGH",
+      "precedents": [
+        {
+          "title": "A Darlington v London Borough of Islington",
+          "date": "2026-01-13",
+          "relevance_score": 0.591,
+          "excerpt": "title: A Darlington v London Borough of Islington\npublished: 2026-01-13T00:00:00+00:00\ncontent: EAT 2026 11 [2026] EAT 11 EA-2023-000957-DXA 1.4.0 4eda1c3f84b73a350b454b6953640988399eaa101822b12464cf0248d7ddf27b 7.4.0 #judgment { font-size: 12pt; font-family: 'Calibri, sans-serif'; } #judgment .ListParagraph { margin-left: 0.5in; } #judgment .NormalWeb { font-family: 'Times New Roman'; } #judgment"
+        },
+        {
+          "title": "Dr B Jones v Viiv Healthcare UK Limited",
+          "date": "2026-01-30",
+          "relevance_score": 0.581,
+          "excerpt": "title: Dr B Jones v Viiv Healthcare UK Limited\npublished: 2026-01-30T00:00:00+00:00\ncontent: EAT 2026 24 [2026] EAT 24 EA-2024-000545-OO 1.4.0 7e1fa5d478bd5a51fa32cfbccf01dd07e854cfa812dcfb4547ab7695b488947d 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph { } #judgment"
+        },
+        {
+          "title": "J Alom v The Financial Conduct Authority",
+          "date": "2025-09-30",
+          "relevance_score": 0.579,
+          "excerpt": "title: J Alom v The Financial Conduct Authority\npublished: 2025-09-30T00:00:00+00:00\ncontent: EAT 2025 138 [2025] EAT 138 EA-2024-000397-RN 0.27.1 229f1b9af1237384b0cdf4d80ffd7e0e19d5ea20feeb71c1bcec2b1963429439 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph { } #judg"
+        }
+      ],
+      "legal_analysis": {
+        "legal_risk_confirmed": true,
+        "precedent_support": [
+          "In A Darlington v London Borough of Islington, the court emphasized the importance of reasonable liability caps in relation to the contract value, suggesting that excessively low caps may be deemed unconscionable.",
+          "In Dr B Jones v Viiv Healthcare UK Limited, the court found that liability limitations must be proportionate to the potential damages, indicating that a \u00a35,000 cap on a \u00a3250,000 contract could be challenged."
+        ],
+        "recommended_action": "Negotiate a higher liability cap that reflects the contract value and potential risks involved.",
+        "alternative_wording": "Provider\u2019s total liability is capped at 20% of the contract value."
+      }
+    },
+    {
+      "clause_type": "Liability",
+      "text": "Provider excludes liability for data breaches, IP infringement, and gross negligence.",
+      "page_number": 1,
+      "risk_flag": "RED",
+      "risk_explanation": "Exclusion of liability for critical areas like data breaches and gross negligence leaves client unprotected.",
+      "risk_score": 10,
+      "risk_level": "HIGH",
+      "precedents": [
+        {
+          "title": "Dr B Jones v Viiv Healthcare UK Limited",
+          "date": "2026-01-30",
+          "relevance_score": 0.609,
+          "excerpt": "title: Dr B Jones v Viiv Healthcare UK Limited\npublished: 2026-01-30T00:00:00+00:00\ncontent: EAT 2026 24 [2026] EAT 24 EA-2024-000545-OO 1.4.0 7e1fa5d478bd5a51fa32cfbccf01dd07e854cfa812dcfb4547ab7695b488947d 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph { } #judgment"
+        },
+        {
+          "title": "A Darlington v London Borough of Islington",
+          "date": "2026-01-13",
+          "relevance_score": 0.609,
+          "excerpt": "title: A Darlington v London Borough of Islington\npublished: 2026-01-13T00:00:00+00:00\ncontent: EAT 2026 11 [2026] EAT 11 EA-2023-000957-DXA 1.4.0 4eda1c3f84b73a350b454b6953640988399eaa101822b12464cf0248d7ddf27b 7.4.0 #judgment { font-size: 12pt; font-family: 'Calibri, sans-serif'; } #judgment .ListParagraph { margin-left: 0.5in; } #judgment .NormalWeb { font-family: 'Times New Roman'; } #judgment"
+        },
+        {
+          "title": "J Alom v The Financial Conduct Authority",
+          "date": "2025-09-30",
+          "relevance_score": 0.605,
+          "excerpt": "title: J Alom v The Financial Conduct Authority\npublished: 2025-09-30T00:00:00+00:00\ncontent: EAT 2025 138 [2025] EAT 138 EA-2024-000397-RN 0.27.1 229f1b9af1237384b0cdf4d80ffd7e0e19d5ea20feeb71c1bcec2b1963429439 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph { } #judg"
+        }
+      ],
+      "legal_analysis": {
+        "legal_risk_confirmed": true,
+        "precedent_support": [
+          "In Dr B Jones v Viiv Healthcare UK Limited, the court emphasized the importance of liability clauses in protecting parties from negligence, indicating that exclusion clauses must be carefully scrutinized.",
+          "In A Darlington v London Borough of Islington, the court ruled that exclusion clauses can be deemed unreasonable if they leave a party vulnerable in critical areas, such as data breaches."
+        ],
+        "recommended_action": "Negotiate the clause to include a cap on liability or specific exceptions for gross negligence and data breaches.",
+        "alternative_wording": "Provider limits liability for data breaches and gross negligence to the maximum extent permitted by law."
+      }
+    },
+    {
+      "clause_type": "Indemnity",
+      "text": "Client indemnifies Provider for all claims, including those arising from Provider\u2019s own negligence.",
+      "page_number": 1,
+      "risk_flag": "RED",
+      "risk_explanation": "Client indemnifies provider even for provider's own negligence, a highly unfavorable and risky clause.",
+      "risk_score": 10,
+      "risk_level": "HIGH",
+      "precedents": [
+        {
+          "title": "T Turner v Western Mortgage Services Ltd",
+          "date": "2025-12-19",
+          "relevance_score": 0.628,
+          "excerpt": "title: T Turner v Western Mortgage Services Ltd\npublished: 2025-12-19T00:00:00+00:00\ncontent: EAT 2025 191 [2025] EAT 191 EA-2023-000554-LA 1.3.0 ba259249dc331c2c30865d4aa9a0a1e27c2dbdc61d62985ec60102ed472e0f41 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph { } #judgm"
+        },
+        {
+          "title": "Dr B Jones v Viiv Healthcare UK Limited",
+          "date": "2026-01-30",
+          "relevance_score": 0.626,
+          "excerpt": "title: Dr B Jones v Viiv Healthcare UK Limited\npublished: 2026-01-30T00:00:00+00:00\ncontent: EAT 2026 24 [2026] EAT 24 EA-2024-000545-OO 1.4.0 7e1fa5d478bd5a51fa32cfbccf01dd07e854cfa812dcfb4547ab7695b488947d 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph { } #judgment"
+        },
+        {
+          "title": "J Alom v The Financial Conduct Authority",
+          "date": "2025-09-30",
+          "relevance_score": 0.624,
+          "excerpt": "title: J Alom v The Financial Conduct Authority\npublished: 2025-09-30T00:00:00+00:00\ncontent: EAT 2025 138 [2025] EAT 138 EA-2024-000397-RN 0.27.1 229f1b9af1237384b0cdf4d80ffd7e0e19d5ea20feeb71c1bcec2b1963429439 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph { } #judg"
+        }
+      ],
+      "legal_analysis": {
+        "legal_risk_confirmed": true,
+        "precedent_support": [
+          "In T Turner v Western Mortgage Services Ltd, the court emphasized the importance of clear indemnity clauses and their enforceability, which highlights the risk of broad indemnity provisions.",
+          "In J Alom v The Financial Conduct Authority, the court addressed the limits of indemnity clauses, indicating that indemnifying a party for its own negligence can be deemed unconscionable."
+        ],
+        "recommended_action": "Negotiate the clause to limit indemnity to claims arising from the client's negligence only.",
+        "alternative_wording": "Client indemnifies Provider for all claims arising from Client's negligence."
+      }
+    },
+    {
+      "clause_type": "Termination",
+      "text": "Client may not terminate for convenience.",
+      "page_number": 1,
+      "risk_flag": "RED",
+      "risk_explanation": "Client has no right to terminate for convenience, locking them into the agreement.",
+      "risk_score": 9,
+      "risk_level": "HIGH",
+      "precedents": [
+        {
+          "title": "T Turner v Western Mortgage Services Ltd",
+          "date": "2025-12-19",
+          "relevance_score": 0.579,
+          "excerpt": "title: T Turner v Western Mortgage Services Ltd\npublished: 2025-12-19T00:00:00+00:00\ncontent: EAT 2025 191 [2025] EAT 191 EA-2023-000554-LA 1.3.0 ba259249dc331c2c30865d4aa9a0a1e27c2dbdc61d62985ec60102ed472e0f41 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph { } #judgm"
+        },
+        {
+          "title": "Yovka Kisheva v Secure Frontline Services Limited",
+          "date": "2025-12-11",
+          "relevance_score": 0.575,
+          "excerpt": "title: Yovka Kisheva v Secure Frontline Services Limited\npublished: 2025-12-11T00:00:00+00:00\ncontent: EAT 2025 194 [2025] EAT 194 EA-2023-001027-NK 1.4.0 6c8b7cc5a7e3a1b3f5d217a098285b7ab34a5041881a91523175dba9436bb5ce 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph {"
+        },
+        {
+          "title": "J Davidson v National Express Limited",
+          "date": "2025-10-21",
+          "relevance_score": 0.572,
+          "excerpt": "title: J Davidson v National Express Limited\npublished: 2025-10-21T00:00:00+00:00\ncontent: EAT 2025 151 [2025] EAT 151 EA-2024-000081-OO 0.27.1 d4914f483848e32cc3534df2c562f47a6f318103cf9a18f0b8de8bddd346c195 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph { } #judgmen"
+        }
+      ],
+      "legal_analysis": {
+        "legal_risk_confirmed": true,
+        "precedent_support": [
+          "In T Turner v Western Mortgage Services Ltd, the court emphasized the importance of termination rights in contracts, suggesting that a lack of such rights can lead to unfavorable binding agreements.",
+          "In Yovka Kisheva v Secure Frontline Services Limited, the court ruled on the implications of restrictive termination clauses, indicating that they can create significant liabilities for the party bound by them."
+        ],
+        "recommended_action": "Consider negotiating a termination for convenience clause to mitigate risks and allow for flexibility.",
+        "alternative_wording": "Client may terminate the agreement with a notice period of 30 days for convenience."
+      }
+    },
+    {
+      "clause_type": "Termination",
+      "text": "Provider may terminate at any time with 7 days\u2019 notice.",
+      "page_number": 1,
+      "risk_flag": "YELLOW",
+      "risk_explanation": "Provider can terminate with short notice, leaving client vulnerable to sudden service disruption.",
+      "risk_score": 6,
+      "risk_level": "MEDIUM",
+      "precedents": [],
+      "legal_analysis": null
+    },
+    {
+      "clause_type": "Governing Law",
+      "text": "Governed by the laws of Delaware, USA (despite both parties being UK-based).",
+      "page_number": 1,
+      "risk_flag": "RED",
+      "risk_explanation": "Governing law is outside the UK for UK-based entities, creating legal complexity and potential disadvantage.",
+      "risk_score": 8,
+      "risk_level": "HIGH",
+      "precedents": [
+        {
+          "title": "A Darlington v London Borough of Islington",
+          "date": "2026-01-13",
+          "relevance_score": 0.622,
+          "excerpt": "title: A Darlington v London Borough of Islington\npublished: 2026-01-13T00:00:00+00:00\ncontent: EAT 2026 11 [2026] EAT 11 EA-2023-000957-DXA 1.4.0 4eda1c3f84b73a350b454b6953640988399eaa101822b12464cf0248d7ddf27b 7.4.0 #judgment { font-size: 12pt; font-family: 'Calibri, sans-serif'; } #judgment .ListParagraph { margin-left: 0.5in; } #judgment .NormalWeb { font-family: 'Times New Roman'; } #judgment"
+        },
+        {
+          "title": "J Davidson v National Express Limited",
+          "date": "2025-10-21",
+          "relevance_score": 0.578,
+          "excerpt": "title: J Davidson v National Express Limited\npublished: 2025-10-21T00:00:00+00:00\ncontent: EAT 2025 151 [2025] EAT 151 EA-2024-000081-OO 0.27.1 d4914f483848e32cc3534df2c562f47a6f318103cf9a18f0b8de8bddd346c195 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .BodyText { margin-left: 0.35in; font-family: Algerian; font-size: 12pt; } #judgment .ListParagraph { } #judgmen"
+        },
+        {
+          "title": "Jerzy Lawrynowicz v Bidvest Noonan (UK) Limited",
+          "date": "2025-11-24",
+          "relevance_score": 0.578,
+          "excerpt": "title: Jerzy Lawrynowicz v Bidvest Noonan (UK) Limited\npublished: 2025-11-24T00:00:00+00:00\ncontent: EAT 2025 177 [2025] EAT 177 EA-2024-SCO-000087-JP 0.27.1 2e75524a80327185fdff0bfd10d7d8445a6fa91c5b8a4564a2ef2f1fbec685f2 7.4.0 #judgment { font-size: 11pt; font-family: 'Times New Roman'; } #judgment .Heading1 { font-size: 16pt; color: #365F91; } #judgment .Heading4 { font-style: italic; color: #3"
+        }
+      ],
+      "legal_analysis": {
+        "legal_risk_confirmed": true,
+        "precedent_support": [
+          "In A Darlington v London Borough of Islington, the court emphasized the importance of jurisdiction and governing law in determining the enforceability of contracts, which supports the concern regarding the Delaware governing law.",
+          "In J Davidson v National Express Limited, the court highlighted the complexities that arise when contracts are governed by foreign laws, particularly for UK-based entities, reinforcing the potential disadvantages of the current clause."
+        ],
+        "recommended_action": "Negotiate to change the governing law to the laws of England and Wales to ensure clarity and reduce legal complexity.",
+        "alternative_wording": "Governing law shall be the laws of England and Wales."
+      }
+    }
+  ]
+}

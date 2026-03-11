@@ -17,6 +17,9 @@ import openai
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 
+# for testing the logger before implementation
+#from utils.audit import setup_audit_logger, log_ai_interaction
+
 load_dotenv(override=True)
 OPENROUTER_API_KEY = os.getenv('OPENROUTER_API_KEY')
 
@@ -195,6 +198,9 @@ Risk Score Guidance (1–10):
 9–10: critical contractual risk"""
 
     def extract_clauses(self, pages: List[dict]) -> dict:
+        # Set up the audit logger for testing, the logger set up might need moving for production
+        #  logger = setup_audit_logger()
+
         """
         Processes each page and aggregates extracted clauses.
         :param pages: List of dicts [{'page': 1, 'text': '...'}, ...]
@@ -220,6 +226,10 @@ Risk Score Guidance (1–10):
 
                 response_content = response.choices[0].message.content
                 page_results = json.loads(response_content)
+                # log_ai_interaction(logger, user_input=f"ANALYZE PAGE {page_num}:\n\n{text[:500]}...",  # Log first 500 chars for brevity
+                #                    ai_output=response_content,
+                #                    model_name=self.model,
+                #                    metadata={"page_number": page_num})
 
                 for clause in page_results.get("clauses", []):
                     clause["page_found"] = page_num

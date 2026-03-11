@@ -1,0 +1,153 @@
+{
+  "contract_id": "contract_1",
+  "source": "HIGH RISK SERVICES AGREEMENT.docx",
+  "extraction_date": "2026-03-11",
+  "extraction_method": "manual_review_from_ethics_report",
+  "description": "Contract reference extracted from processed ethics audit - serves as ground truth for grounding validation",
+  "clauses": [
+    {
+      "id": "term_001",
+      "clause_type": "Term",
+      "text": "Agreement lasts 36 months, non-cancellable.",
+      "page": 1,
+      "section": "Term",
+      "risk_level": "HIGH",
+      "risk_score": 9
+    },
+    {
+      "id": "term_002",
+      "clause_type": "Term",
+      "text": "Automatic renewal for 5-year periods unless terminated with 365 days' notice.",
+      "page": 1,
+      "section": "Term",
+      "risk_level": "MEDIUM",
+      "risk_score": 6
+    },
+    {
+      "id": "fees_001",
+      "clause_type": "Fees",
+      "text": "No refunds under any circumstances.",
+      "page": 1,
+      "section": "Payment Terms",
+      "risk_level": "HIGH",
+      "risk_score": 8
+    },
+    {
+      "id": "data_protection_001",
+      "clause_type": "Data Protection",
+      "text": "Provider may transfer data to any country, with no safeguards.",
+      "page": 1,
+      "section": "Data Protection",
+      "risk_level": "HIGH",
+      "risk_score": 9
+    },
+    {
+      "id": "data_protection_002",
+      "clause_type": "Data Protection",
+      "text": "Provider may appoint sub-processors without notice.",
+      "page": 1,
+      "section": "Data Protection",
+      "risk_level": "HIGH",
+      "risk_score": 7
+    },
+    {
+      "id": "confidentiality_001",
+      "clause_type": "Confidentiality",
+      "text": "Confidentiality obligations last 12 months only.",
+      "page": 1,
+      "section": "Confidentiality",
+      "risk_level": "MEDIUM",
+      "risk_score": 5
+    },
+    {
+      "id": "ip_001",
+      "clause_type": "Intellectual Property",
+      "text": "Provider owns all IP, including derivative works created from Client Data.",
+      "page": 1,
+      "section": "Intellectual Property",
+      "risk_level": "HIGH",
+      "risk_score": 9
+    },
+    {
+      "id": "data_training_001",
+      "clause_type": "Data Training",
+      "text": "Provider may use Client Data to \"improve its products.\"",
+      "page": 1,
+      "section": "Data Usage",
+      "risk_level": "HIGH",
+      "risk_score": 9
+    },
+    {
+      "id": "service_levels_001",
+      "clause_type": "Service Levels",
+      "text": "No uptime commitment.",
+      "page": 1,
+      "section": "Service Levels",
+      "risk_level": "HIGH",
+      "risk_score": 8
+    },
+    {
+      "id": "service_levels_002",
+      "clause_type": "Service Levels",
+      "text": "No support obligations.",
+      "page": 1,
+      "section": "Service Levels",
+      "risk_level": "HIGH",
+      "risk_score": 8
+    },
+    {
+      "id": "liability_001",
+      "clause_type": "Liability",
+      "text": "Provider's total liability is capped at £5,000.",
+      "page": 1,
+      "section": "Liability",
+      "risk_level": "HIGH",
+      "risk_score": 10
+    },
+    {
+      "id": "liability_002",
+      "clause_type": "Liability",
+      "text": "Provider excludes liability for data breaches, IP infringement, and gross negligence.",
+      "page": 1,
+      "section": "Liability",
+      "risk_level": "HIGH",
+      "risk_score": 10
+    },
+    {
+      "id": "indemnity_001",
+      "clause_type": "Indemnity",
+      "text": "Client indemnifies Provider for all claims, including those arising from Provider's own negligence.",
+      "page": 1,
+      "section": "Indemnity",
+      "risk_level": "HIGH",
+      "risk_score": 10
+    },
+    {
+      "id": "termination_001",
+      "clause_type": "Termination",
+      "text": "Client may not terminate for convenience.",
+      "page": 1,
+      "section": "Termination",
+      "risk_level": "HIGH",
+      "risk_score": 9
+    },
+    {
+      "id": "termination_002",
+      "clause_type": "Termination",
+      "text": "Provider may terminate at any time with 7 days' notice.",
+      "page": 1,
+      "section": "Termination",
+      "risk_level": "MEDIUM",
+      "risk_score": 6
+    },
+    {
+      "id": "governing_law_001",
+      "clause_type": "Governing Law",
+      "text": "Governed by the laws of Delaware, USA (despite both parties being UK-based).",
+      "page": 1,
+      "section": "Governing Law",
+      "risk_level": "HIGH",
+      "risk_score": 8
+    }
+  ]
+}
