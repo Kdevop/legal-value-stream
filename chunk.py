@@ -132,19 +132,77 @@ class VectorStoreManager:
             print(f"     Text  : {doc[:300]}...")
 
 
+_store: VectorStoreManager = None
+
+
+def _get_store() -> VectorStoreManager:
+    """Lazy-initialise the singleton VectorStoreManager."""
+    global _store
+    if _store is None:
+        _store = VectorStoreManager()
+    return _store
+
+
+def load_cases(path: str = "employment_cases.json"):
+    """
+    Public wrapper: load case law into the vector store.
+    Called once on app startup from app.py.
+    """
+    store = _get_store()
+    if store.collection.count() == 0:
+        print("📊 Collection empty — loading cases...")
+        store.load_cases(path)
+    else:
+        print(f"✅ Collection already loaded: {store.collection.count()} documents")
+
+
+def assess_risk(text: str) -> dict:
+    """
+    Public wrapper: run a full risk assessment on raw contract text.
+    1. Extracts clauses via ClauseExtractor (contract_processor.py)
+    2. Enriches high-risk clauses with case law via RiskAnalyser (risk_analyser.py)
+    Returns a dict ready to be JSON-serialised by Flask.
+    """
+    import os
+    from contract_processor import ClauseExtractor
+    from risk_analyser import RiskAnalyser
+
+    api_key = os.getenv("OPENROUTER_API_KEY")
+    if not api_key:
+        return {"error": "OPENROUTER_API_KEY not set in environment"}
+
+    store = _get_store()
+
+    # Wrap plain text as a single-page structure ClauseExtractor expects
+    pages = [{"page": 1, "text": text}]
+
+    # Stage 1 — extract and classify clauses
+    extractor = ClauseExtractor(api_key=api_key)
+    extraction = extractor.extract_clauses(pages)
+    clauses = extraction.get("clauses", [])
+
+    if not clauses:
+        return {"total_clauses": 0, "high_risk_count": 0, "clauses": []}
+
+    # Stage 2 — enrich RED clauses with case law precedents
+    analyser = RiskAnalyser(
+        collection=store.collection,
+        embedder=store.embedder,
+        api_key=api_key
+    )
+    return analyser.analyse_all_clauses(clauses)
+
+
 def main():
     """Entry point for testing the vector store."""
-    # Create manager
-    store = VectorStoreManager()
-    
-    # Load cases if collection is empty
+    store = _get_store()
+
     if store.collection.count() == 0:
         print("📊 Collection empty. Loading cases...")
         store.load_cases("employment_cases.json")
     else:
         print(f"✅ Collection already loaded: {store.collection.count()} documents")
-    
-    # Run test retrieval
+
     print("\n🔍 Running test retrieval...")
     store.retrieve("unfair dismissal procedural failure")
 
