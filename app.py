@@ -4,6 +4,8 @@ import chunk as rag
 
 app = Flask(__name__)
 
+app.config['MAX_CONTENT_LENGTH'] = 25 * 1024 * 1024  # 25 MB limit for uploads
+
 # Load cases into ChromaDB on startup
 store = rag.VectorStoreManager()
 store.load_cases("employment_cases.json")
@@ -51,5 +53,5 @@ def assess():
     return jsonify(rag.assess_risk(text))
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=False, port=5000)
 
