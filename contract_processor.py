@@ -20,6 +20,8 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 OPENROUTER_API_KEY = os.getenv('OPENROUTER_API_KEY')
 
+from utils.audit import setup_audit_logger, log_ai_interaction
+
 # ============================================================
 # PYDANTIC MODELS
 # ============================================================
@@ -207,6 +209,7 @@ Risk Score Guidance (1–10):
         """
         all_extracted_clauses = []
         clause_counter = 0
+        logger = setup_audit_logger()
         print(f"Extracting clauses from {len(pages)} pages...")
 
         for page_data in pages:
@@ -226,6 +229,13 @@ Risk Score Guidance (1–10):
 
                 response_content = response.choices[0].message.content
                 page_results = json.loads(response_content)
+
+                log_ai_interaction(logger,
+                                   user_input=f"ANALYZE PAGE {page_num}:\n\n{text[:500]}...",
+                                   ai_output=response_content,
+                                   model_name=self.model,
+                                   metadata={"page_number": page_num}
+                                   )
 
                 for clause in page_results.get("clauses", []):
                     clause["page_found"] = page_num

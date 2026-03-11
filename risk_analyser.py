@@ -108,27 +108,29 @@ Return ONLY valid JSON matching this schema:
 }}
 """
 
-        try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[
-                    {"role": "system", "content": "You are a UK contract law expert. Return only valid JSON."},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=0.2,
-                response_format={"type": "json_object"}
-            )
+        for attempt in range(3):
+            try:
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=[
+                        {"role": "system", "content": "You are a UK contract law expert. Return only valid JSON."},
+                        {"role": "user", "content": prompt}
+                    ],
+                    temperature=0.2,
+                    response_format={"type": "json_object"},
+                    max_tokens=1000        
+                )
 
-            raw = response.choices[0].message.content
-            data = json.loads(raw)
-            validated_analysis = AnalysisResult(**data)
-        
-        # 3. Return as a dict for your existing pipeline
-            return validated_analysis.model_dump()
-
-        except Exception as e:
-            print(f"⚠️ Validation or LLM error: {e}")
-            return None
+                raw = response.choices[0].message.content
+                data = json.loads(raw)
+                validated_analysis = AnalysisResult(**data)
+                
+                return validated_analysis.model_dump()
+            
+            except Exception as e:
+                print(f"⚠️ Attempt {attempt+1} failed: {e}")
+                if attempt == 2:
+                    return None
 
     def analyse_all_clauses(self, clauses: List[dict]) -> Dict:
         """Process all clauses from ClauseExtractor."""
