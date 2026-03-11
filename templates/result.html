@@ -130,49 +130,50 @@ footer p { font-size: 0.68rem; color: rgba(255,255,255,0.3); letter-spacing: 0.0
         <a href="/">Go to Assessment</a>
       </div>`;
   } else {
-    const d     = JSON.parse(raw);
-    const level = (d.risk_level || "low").toLowerCase();
-    const labels = { high: "High Risk", medium: "Medium Risk", low: "Low Risk" };
-    const flagText = d.is_high_risk ? "Flagged for Review" : "No Immediate Flag";
+    // Replace the rendering logic in result.html with:
+const d = JSON.parse(raw);
+const overallLevel = d.high_risk_count > 0 ? "high" : "low";
 
-    const reasonsHtml    = (d.risk_reasons || []).map(r => `<li>${r}</li>`).join("") || "<li>None identified</li>";
-    const precedentsHtml = (d.similar_precedents || []).map(p => `<li>${p}</li>`).join("") || "<li>None retrieved</li>";
+const clausesHtml = d.clauses.map(c => {
+  const flag = c.risk_flag;  // RED, YELLOW, GREEN
+  const level = flag === "RED" ? "high" : flag === "YELLOW" ? "medium" : "low";
+  const action = c.legal_analysis?.recommended_action || c.risk_explanation;
+  const precedentsHtml = (c.precedents || [])
+    .map(p => `<li>${p.title} (${p.date})</li>`).join("") || "<li>None retrieved</li>";
 
-    document.getElementById("main-content").innerHTML = `
-      <div class="section-label">Risk Assessment Report</div>
-
-      <div class="verdict-bar ${level}">
-        <div>
-          <div class="verdict-level">${labels[level] || level}</div>
-          <div class="verdict-sub">Overall Risk Classification</div>
-        </div>
-        <div class="verdict-flag">${flagText}</div>
+  return `
+    <div class="verdict-bar ${level}" style="margin-bottom:1rem">
+      <div>
+        <div class="verdict-level">${c.clause_type}</div>
+        <div class="verdict-sub">Page ${c.page_number} — Score ${c.risk_score}/10</div>
       </div>
-
-      <div class="result-grid">
-        <div class="result-block">
-          <h4>Risk Factors Identified</h4>
-          <ul>${reasonsHtml}</ul>
-        </div>
-        <div class="result-block">
-          <h4>Similar Precedent Cases</h4>
-          <ul>${precedentsHtml}</ul>
-        </div>
+      <div class="verdict-flag">${flag}</div>
+    </div>
+    <div class="result-grid" style="margin-bottom:2rem">
+      <div class="result-block">
+        <h4>Risk Explanation</h4>
+        <ul><li>${c.risk_explanation}</li></ul>
       </div>
-
-      <div class="action-block">
-        <div class="action-icon">S</div>
-        <div>
-          <h4>Recommended Action</h4>
-          <p>${d.recommended_action || "No recommendation provided."}</p>
-        </div>
+      <div class="result-block">
+        <h4>Relevant Precedents</h4>
+        <ul>${precedentsHtml}</ul>
       </div>
+    </div>
+    <div class="action-block" style="margin-bottom:2rem">
+      <div class="action-icon">S</div>
+      <div>
+        <h4>Recommended Action</h4>
+        <p>${action}</p>
+      </div>
+    </div>`;
+}).join("");
 
-      <div class="result-disclaimer">
-        <div>
-          <p><strong>Legal Notice</strong>This assessment is indicative only and does not constitute legal advice. The risk classification is based on retrieval-augmented analysis of Employment Appeal Tribunal decisions and should be reviewed by a qualified solicitor before any action is taken.</p>
-        </div>
-      </div>`;
+document.getElementById("main-content").innerHTML = `
+  <div class="section-label">Risk Assessment Report</div>
+  <p style="margin-bottom:2rem;color:var(--muted);font-size:0.85rem">
+    ${d.total_clauses} clauses analysed — ${d.high_risk_count} high risk
+  </p>
+  ${clausesHtml}`;
   }
 </script>
 </body>

@@ -5,7 +5,8 @@ import chunk as rag
 app = Flask(__name__)
 
 # Load cases into ChromaDB on startup
-rag.load_cases("employment_cases.json")
+store = rag.VectorStoreManager()
+store.load_cases("employment_cases.json")
 
 @app.route("/")
 def index():
@@ -52,3 +53,4 @@ def assess():
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
+

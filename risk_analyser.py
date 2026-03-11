@@ -39,11 +39,11 @@ class RiskAnalyser:
         """Analyse a single clause with case law precedents."""
 
         # Skip non-high-risk clauses
-        if clause.get('risk_level') not in ['HIGH', 'RED']:
+        if clause.get('risk_flag') not in ['HIGH', 'RED']:
             return {**clause, "precedents": [], "legal_analysis": None}
 
         # Query vector DB
-        query_text = f"{clause.get('type', '')}: {clause.get('text', '')}"
+        query_text = f"{clause.get('clause_type', clause.get('type', ''))}: {clause.get('text', '')}"
         query_embedding = self.embedder.encode(query_text).tolist()
 
         results = self.collection.query(
@@ -93,7 +93,7 @@ Based on these relevant case law precedents:
 Analyse this contract clause:
 TYPE: {clause.get('type', 'Unknown')}
 TEXT: {clause.get('text', '')}
-CURRENT RISK: {clause.get('risk_level', 'UNKNOWN')}
+CURRENT RISK: {clause.get('risk_flag', 'UNKNOWN')}
 REASON: {clause.get('risk_explanation', '')}
 
 Return ONLY valid JSON matching this schema:
@@ -138,7 +138,7 @@ Return ONLY valid JSON matching this schema:
             enriched = self.analyse_clause(clause)
             enriched_clauses.append(enriched)
 
-        high_risk_count = sum(1 for c in enriched_clauses if c.get('risk_level') in ['HIGH', 'RED'])
+        high_risk_count = sum(1 for c in enriched_clauses if c.get('risk_flag') == 'RED')
 
         return {
             "total_clauses": len(enriched_clauses),
