@@ -176,7 +176,7 @@ def assess_risk(text: str) -> dict:
     # Wrap plain text as a single-page structure ClauseExtractor expects
     pages = [{"page": 1, "text": text}]
 
-    # Stage 1 — extract and classify clauses
+    # Stage 1 - extract and classify clauses
     extractor = ClauseExtractor(api_key=api_key)
     extraction = extractor.extract_clauses(pages)
     clauses = extraction.get("clauses", [])
@@ -184,7 +184,7 @@ def assess_risk(text: str) -> dict:
     if not clauses:
         return {"total_clauses": 0, "high_risk_count": 0, "clauses": []}
 
-    # Stage 2 — enrich RED clauses with case law precedents
+    # Stage 2 - enrich RED clauses with case law precedents
     analyser = RiskAnalyser(
         collection=store.collection,
         embedder=store.embedder,

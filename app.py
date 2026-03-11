@@ -49,7 +49,7 @@ def assess():
     if not text or not text.strip():
         return jsonify({"error": "No text could be extracted from the submission"}), 400
 
-    return jsonify(store.assess_risk(text))
+    return jsonify(rag.assess_risk(text))
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
