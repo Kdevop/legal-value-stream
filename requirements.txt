@@ -3,12 +3,14 @@ pdfplumber
 python-docx
 PyMuPDF
 docx
+reportlab
 
 # AI/ML
 
 openai
 sentence-transformers
 chromadb
+transformers
 
 # Data Validation
 pydantic
