@@ -1,14 +1,16 @@
-import os, json
+import os, json, tempfile
 from flask import Flask, request, jsonify, render_template
 import chunk as rag
+import chunk as rag
+from contract_processor import DocParser, ClauseExtractor   
+from risk_analyser import RiskAnalyser
 
 app = Flask(__name__)
 
 app.config['MAX_CONTENT_LENGTH'] = 25 * 1024 * 1024  # 25 MB limit for uploads
 
 # Load cases into ChromaDB on startup
-store = rag.VectorStoreManager()
-store.load_cases("employment_cases.json")
+rag.load_cases("employment_cases.json")
 
 @app.route("/")
 def index():
@@ -20,38 +22,43 @@ def result():
 
 @app.route("/assess", methods=["POST"])
 def assess():
-    # only accept file uploads; text entry removed
+    api_key = os.getenv("OPENROUTER_API_KEY")
+    store = rag._get_store()
+
     if "file" not in request.files:
         return jsonify({"error": "No file uploaded"}), 400
 
     f = request.files["file"]
-    filename = f.filename.lower()
+    suffix = os.path.splitext(f.filename.lower())[1]
 
-    if filename.endswith(".pdf"):
-        try:
-            import pypdf
-            reader = pypdf.PdfReader(f)
-            text = " ".join(page.extract_text() or "" for page in reader.pages)
-        except ImportError:
-            return jsonify({"error": "pypdf not installed. Run: pip install pypdf"}), 500
+    if suffix not in [".pdf", ".docx"]:
+        return jsonify({"error": "Only PDF and DOCX files are supported"}), 400
 
-    elif filename.endswith(".docx"):
-        try:
-            import docx
-            doc = docx.Document(f)
-            text = " ".join(p.text for p in doc.paragraphs)
-        except ImportError:
-            return jsonify({"error": "python-docx not installed. Run: pip install python-docx"}), 500
+    # Save to temp file so DocParser handles page splitting correctly
+    with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+        f.save(tmp.name)
+        tmp_path = tmp.name
 
-    else:
-        # unsupported extensions
-        return jsonify({"error": "Unsupported file type. Only PDF and DOCX are allowed."}), 400
+    try:
+        pages = DocParser().parse_file(tmp_path)
+    finally:
+        os.unlink(tmp_path)
 
-    if not text or not text.strip():
+    if not pages:
         return jsonify({"error": "No text could be extracted from the submission"}), 400
 
-    return jsonify(rag.assess_risk(text))
+    extractor = ClauseExtractor(api_key=api_key)
+    clauses = extractor.extract_clauses(pages).get("clauses", [])
+
+    if not clauses:
+        return jsonify({"total_clauses": 0, "high_risk_count": 0, "clauses": []})
+
+    analyser = RiskAnalyser(
+        collection=store.collection,
+        embedder=store.embedder,
+        api_key=api_key
+    )
+    return jsonify(analyser.analyse_all_clauses(clauses))
 
 if __name__ == "__main__":
     app.run(debug=False, port=5000)
-

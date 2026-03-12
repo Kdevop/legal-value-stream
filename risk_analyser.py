@@ -6,6 +6,7 @@ import json
 from typing import List, Dict, Optional
 from openai import OpenAI
 from pydantic import BaseModel, Field
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 class PrecedentCitation(BaseModel):
     case_title: str
@@ -133,16 +134,16 @@ Return ONLY valid JSON matching this schema:
                     return None
 
     def analyse_all_clauses(self, clauses: List[dict]) -> Dict:
-        """Process all clauses from ClauseExtractor."""
+        enriched_clauses = [None] * len(clauses)
 
-        enriched_clauses = []
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            futures = {executor.submit(self.analyse_clause, clause): i 
+                    for i, clause in enumerate(clauses)}
+            for future in as_completed(futures):
+                i = futures[future]
+                enriched_clauses[i] = future.result()
 
-        for clause in clauses:
-            enriched = self.analyse_clause(clause)
-            enriched_clauses.append(enriched)
-
-        high_risk_count = sum(1 for c in enriched_clauses if c.get('risk_flag') == 'RED')
-
+        high_risk_count = sum(1 for c in enriched_clauses if c.get('risk_flag') in ['HIGH', 'RED'])
         return {
             "total_clauses": len(enriched_clauses),
             "high_risk_count": high_risk_count,

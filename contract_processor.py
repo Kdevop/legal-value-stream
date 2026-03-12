@@ -10,7 +10,7 @@ import json
 import argparse
 from pathlib import Path
 from typing import List, Optional
-
+from concurrent.futures import ThreadPoolExecutor, as_completed 
 import pdfplumber
 from docx import Document
 import openai
@@ -94,27 +94,32 @@ class DocParser:
 
     def _parse_docx(self, file_path: Path) -> List[dict]:
         """
-        Extracts text from DOCX.
+        Extracts text from DOCX, splitting on page breaks to preserve page-level indexing.
         """
         try:
             doc = Document(file_path)
             print(f"Parsing DOCX: {file_path.name}")
 
-            text_cont = []
-            for para in doc.paragraphs:
-                if para.text.strip():
-                    text_cont.append(para.text)
+            pages = []
+            current_page = []
+            page_num = 1
 
-            for table in doc.tables:
-                for row in table.rows:
-                    for cell in row.cells:
-                        if cell.text.strip():
-                            text_cont.append(cell.text)
-            
-            full_text = "\n\n".join(text_cont)
-            
-            return [{"page": 1, "text": full_text}]
-            
+            for para in doc.paragraphs:
+                # Detect explicit page breaks in paragraph XML
+                if 'lastRenderedPageBreak' in para._p.xml or 'w:type="page"' in para._p.xml:
+                    if current_page:
+                        pages.append({"page": page_num, "text": "\n\n".join(current_page)})
+                        page_num += 1
+                        current_page = []
+                if para.text.strip():
+                    current_page.append(para.text)
+
+            # Append final page
+            if current_page:
+                pages.append({"page": page_num, "text": "\n\n".join(current_page)})
+
+            return pages if pages else [{"page": 1, "text": ""}]
+
         except Exception as e:
             raise RuntimeError(f"Error parsing DOCX {file_path}: {e}")
 
@@ -162,15 +167,19 @@ Return ONLY valid JSON that matches this exact structure:
 
 Rules:
 - Use the exact field names shown above.
-- Quote clause text verbatim from the document.
-- Do not invent clauses.
-- If no relevant clauses are present return: {"clauses": []}
+- ONLY quote text that appears verbatim in the document — copy it character for character.
+- If you cannot find the exact text in the page provided, do not include that clause.
+- Do NOT infer, summarise, or invent clause text — if the verbatim text is not on this page, skip it.
+- Do NOT flag the absence of something you cannot see on this page (e.g. do not say "governing law not specified" if you simply have not seen it yet — it may appear on another page).
+- Each numbered or lettered sub-clause (e.g. 1.1, 3.2, 4.a) must be assessed independently — do not combine multiple sub-clauses into one finding.
+- If no relevant clauses are present on this page return: {"clauses": []}
 - Do not include any text outside the JSON.
-- Treat each numbered clause as a separate item — do not combine multiple clauses into one.
-- If governing law is NOT specified anywhere in the document, flag it as RED with clause_type "GOVERNING LAW".
-- If warranties or liability protections are absent, flag the absence itself as RED.
-- Vague language like "as it sees fit", "partners", or "until parties decide" must each be flagged separately.
-- Do not skip clauses because they seem minor — flag everything that matches the rubric.
+- Vague language like "as it sees fit", "at its discretion", or "without restriction" must each be flagged separately as their own clause.
+- Unilateral amendment rights held by the Provider are a RED TERMINATION flag.
+- A termination fee or exit penalty payable by the Client is a RED TERMINATION flag regardless of size.
+- A cure period exceeding 90 days before the Client can terminate is a RED TERMINATION flag.
+- Absence of warranties on this page is a RED LIABILITY flag only if the page explicitly states there are no warranties — do not assume absence.
+- A liability cap below 10% of contract value must be flagged RED, not YELLOW.
 
 Risk Rubric:
 
@@ -204,7 +213,7 @@ Risk Score Guidance (1–10):
 
     def extract_clauses(self, pages: List[dict]) -> dict:
         """
-        Processes each page and aggregates extracted clauses.
+        Processes pages in parallel and aggregates extracted clauses.
         :param pages: List of dicts [{'page': 1, 'text': '...'}, ...]
         """
         all_extracted_clauses = []
@@ -212,10 +221,9 @@ Risk Score Guidance (1–10):
         logger = setup_audit_logger()
         print(f"Extracting clauses from {len(pages)} pages...")
 
-        for page_data in pages:
+        def process_page(page_data):
             page_num = page_data['page']
             text = page_data['text']
-
             try:
                 response = self.client.chat.completions.create(
                     model=self.model,
@@ -224,28 +232,40 @@ Risk Score Guidance (1–10):
                         {"role": "user", "content": f"ANALYZE PAGE {page_num}:\n\n{text}"}
                     ],
                     response_format={"type": "json_object"},
-                    temperature=0.1
+                    temperature=0.1,
+                    max_tokens=2000
                 )
-
-                response_content = response.choices[0].message.content
-                page_results = json.loads(response_content)
-
+                content = response.choices[0].message.content
                 log_ai_interaction(logger,
-                                   user_input=f"ANALYZE PAGE {page_num}:\n\n{text[:500]}...",
-                                   ai_output=response_content,
-                                   model_name=self.model,
-                                   metadata={"page_number": page_num}
-                                   )
-
-                for clause in page_results.get("clauses", []):
-                    clause["page_found"] = page_num
-                    clause_counter += 1
-                    clause["clause_number"] = clause_counter
-                    validated_clause = ClauseModel(**clause)
-                    all_extracted_clauses.append(validated_clause.model_dump())
-
+                    user_input=f"ANALYZE PAGE {page_num}:\n\n{text[:500]}...",
+                    ai_output=content,
+                    model_name=self.model,
+                    metadata={"page_number": page_num}
+                )
+                return page_num, json.loads(content).get("clauses", [])
             except Exception as e:
-                print(f"⚠️  Error processing Page {page_num}: {e}", file=sys.stderr)
+                print(f"⚠️ Error page {page_num}: {e}", file=sys.stderr)
+                return page_num, []
+
+        # Run all pages in parallel instead of sequentially
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            futures = {executor.submit(process_page, p): p for p in pages}
+            page_results = {}
+            for future in as_completed(futures):
+                page_num, clauses = future.result()
+                page_results[page_num] = clauses
+
+        # Reassemble in page order with clause numbering
+        for page_num in sorted(page_results.keys()):
+            for clause in page_results[page_num]:
+                clause["page_found"] = page_num
+                clause_counter += 1
+                clause["clause_number"] = clause_counter
+                try:
+                    validated = ClauseModel(**clause)
+                    all_extracted_clauses.append(validated.model_dump())
+                except Exception as e:
+                    print(f"⚠️ Validation error: {e}", file=sys.stderr)
 
         return {"clauses": all_extracted_clauses}
 
