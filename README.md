@@ -24,7 +24,7 @@ The system operates as a multi-stage pipeline:
 Technology Stack
 ----------------
 
-*   **AI/LLM**: Multi-model support via OpenRouter (Gemini, GPT-4o-mini, Mistral).
+*   **AI/LLM**: Model support via OpenRouter GPT-4o-mini).
     
 *   **Vector Search**: ChromaDB combined with sentence-transformers for semantic context retrieval.
     
